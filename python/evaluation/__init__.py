@@ -1,6 +1,5 @@
 import saliweb.backend
 import os
-import ConfigParser
 import sys
 
 
@@ -9,8 +8,6 @@ class Job(saliweb.backend.Job):
     runnercls = saliweb.backend.LocalRunner
 
     def run(self):
-        config = self.configlocal("/modbase5/home/evaluation/service/conf/backend.conf")
-
         if os.path.exists("alignment.pir"):
             alignment=" -alignment alignment.pir"
         else:
@@ -41,7 +38,7 @@ class Job(saliweb.backend.Job):
            fh.close
 
         directory=os.getcwd()
-        evaluation_script=config['evaluation_script'] \
+        evaluation_script = self.config.evaluation_script \
                + model+alignment
         script="score_all.sh"
         fh=open(directory+"/"+script,"w")
@@ -53,7 +50,9 @@ class Job(saliweb.backend.Job):
         print >>fh,"cd "+directory
         print >>fh,"echo STARTED >job-state"
         print >>fh,evaluation_script+">&evaluation.log"
-        print >>fh,config['modeller']+" python "+config['modeller_script']+" --model input.pdb "+seq_ident+ ">&modeller.log"
+        print >>fh, self.config.modeller + " python " \
+                    + self.config.modeller_script + " --model input.pdb " \
+                    + seq_ident + ">&modeller.log"
         print >>fh, "echo \"<evaluation>\" >evaluation.txt\n"
         print >>fh, "cat *.xml >>evaluation.txt\n"
         print >>fh, "echo \"</evaluation>\" >>evaluation.txt\n"
@@ -63,23 +62,19 @@ class Job(saliweb.backend.Job):
         fh.close
         r = self.runnercls("cd "+directory+"; chmod +x "+script+";./"+script)
         return r 
-        
-    def configlocal(self,fh):
-        configl=ConfigParser.SafeConfigParser()
-        fh = open(fh)
-        configl.readfp(fh)
-        self.configl = {}
-        self.configl['database'] = configl.get('scoring','database')
-        self.configl['evaluation_script'] = configl.get('scoring','evaluation_script')
-        self.configl['modeller'] = configl.get('scoring','modeller')
-        self.configl['modeller_script'] = configl.get('scoring','modeller_script')
-        self.configl['username'] = configl.get('backend_db','user')
-        self.configl['password'] = configl.get('backend_db','passwd')
-        return (self.configl)
+
+
+class Config(saliweb.backend.Config):
+    def populate(self, config):
+        saliweb.backend.Config.populate(self, config)
+        # Read our service-specific configuration
+        self.evaluation_script = config.get('scoring', 'evaluation_script')
+        self.modeller = config.get('scoring', 'modeller')
+        self.modeller_script = config.get('scoring', 'modeller_script')
 
 
 def get_web_service(config_file):
     db = saliweb.backend.Database(Job)
-    config = saliweb.backend.Config(config_file)
+    config = Config(config_file)
     return saliweb.backend.WebService(config, db)
 
