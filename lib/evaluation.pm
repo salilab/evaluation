@@ -7,7 +7,7 @@ use strict;
 our @ISA = "saliweb::frontend";
 
 sub new {
-    return saliweb::frontend::new(@_, '/modbase5/home/evaluation/service/conf/live.conf', undef, 'ModEval Model Evaluation Server');
+    return saliweb::frontend::new(@_, @CONFIG@);
 }
 
 sub get_navigation_links {
