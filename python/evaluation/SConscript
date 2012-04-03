@@ -1,0 +1,4 @@
+Import('env')
+
+env.InstallPython(['__init__.py'])
+env.InstallPython(['score_modeller.py'])
