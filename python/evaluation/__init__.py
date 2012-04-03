@@ -7,21 +7,6 @@ import sys
 class Job(saliweb.backend.Job):
 
     runnercls = saliweb.backend.LocalRunner
-#    _runners = {}
-
-
-    def register_runner_class(cls, runnercls):
-        """Maintain a mapping from names to :class:`Runner` classes. If you
-           define a :class:`Runner` subclass, you must call this method,
-           passing that subclass."""
-        exist = cls._runners.get(runnercls._runner_name, None)
-        if exist is not None and exist is not runnercls:
-            # Runner name must be unique
-            raise TypeError("Two Runner classes have the same name (%s): "
-                            "%s and %s" % (runnercls._runner_name, exist,
-                                           runnercls))
-        cls._runners[runnercls._runner_name] = runnercls
-
 
     def run(self):
         config = self.configlocal("/modbase5/home/evaluation/service/conf/backend.conf")
