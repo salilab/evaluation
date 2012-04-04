@@ -26,15 +26,14 @@ class Job(saliweb.backend.Job):
                    break
                (key,value)=line.split(":")
                if key == "SequenceIdentity":
-                   if float(value) < 1.1:
-                       value=float(value)*100
                    try: 
                        seq_ident=float(value)
                    except ValueError:
                        raise TypeError("Sequence Identity %s contains disallowed characters"
                                        % (seq_ident))
-                       
-             
+                   if seq_ident < 1.1:
+                       seq_ident *= 100.
+
            fh.close()
 
         directory=os.getcwd()
