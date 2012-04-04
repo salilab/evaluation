@@ -30,7 +30,7 @@ class Job(saliweb.backend.Job):
                        value=float(value)*100
                    try: 
                        seq_ident=float(value)
-                   except:
+                   except ValueError:
                        raise TypeError("Sequence Identity %s contains disallowed characters"
                                        % (seq_ident))
                        
