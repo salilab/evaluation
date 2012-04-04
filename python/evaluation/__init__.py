@@ -35,7 +35,7 @@ class Job(saliweb.backend.Job):
                                        % (seq_ident))
                        
              
-           fh.close
+           fh.close()
 
         directory=os.getcwd()
         evaluation_script = self.config.evaluation_script \
@@ -59,7 +59,7 @@ class Job(saliweb.backend.Job):
         print >>fh, "mv evaluation.txt evaluation.xml\n"
         print >>fh,"sleep 10s"
         print >>fh,"echo DONE >job-state"
-        fh.close
+        fh.close()
         r = self.runnercls("cd "+directory+"; chmod +x "+script+";./"+script)
         return r 
 
