@@ -100,9 +100,20 @@ class ScoreModellerTests(saliweb.test.TestCase):
             sys.argv = ['foo', '--model', 'test.pdb', '--seq_ident', '50.0']
             open('input.profile_A', 'w').write('1.0\n2.0\n')
             open('input.profile_B', 'w').write('3.0\n4.0\n')
+            DummyScripts.error = True
+            self.assertRaises(SystemExit, self.scoremod.main)
+            self.assert_in_file('modeller.results', 'Not a valid PDB file')
+            self.assert_in_file('modeller.results.xml', 'Not a valid PDB file')
+            DummyScripts.error = False
             self.scoremod.main()
         finally:
             sys.argv = old_argv
+
+    def assert_in_file(self, fname, srch):
+        contents = open(fname).read()
+        self.assert_(srch in contents,
+                     "String %s not found in file %s contents: %s" \
+                     % (srch, fname, contents))
 
 if __name__ == '__main__':
     unittest.main()
