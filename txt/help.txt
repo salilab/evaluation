@@ -63,7 +63,7 @@ Input model file in PDB format (see <a href="http://www.pdb.org">http://www.pdb.
 <a name=alignment_file><h5>Alignment File</h5></a>
 &nbsp;<br>
 <p>
-Optional input alignment file in PIR format (<a href="http://salilab.org/modeller/manual/node445.html">see MODELLER Manual</a>). 
+Optional input alignment file in PIR format (<a href="http://salilab.org/modeller/manual/node445.html">see MODELLER manual</a>). 
 Please note that the second field in line two of the structure entry should
 contain a pdb code (without chain) of a template file currently available in
 the PDB database. 
@@ -80,7 +80,7 @@ is significantly more reliable if:
 <p>
 The calculation of the GA341 score requires the target-template sequence
 identity. For model files produced by MODELLER, this information will be taken
-from the header. 
+from the PDB header. 
 </p>
 &nbsp;<br>
 <h4>TSVMod</h4>
@@ -113,7 +113,7 @@ match type is used in two ways: with all features, and with a reduced feature
 set. If an alignment file is given, this match type is used if the template
 PDB file can not be found in the training set, and the information of templates
 with similar features is used instead. Without an alignment file, only a
-reduced set of features is used in the SVN, resulting in the least reliable
+reduced set of features is used in the SVM, resulting in the least reliable
 prediction. </li>
 </ul>
 </p>
@@ -138,7 +138,7 @@ the training set, the default boundaries are relaxed incrementally.
 <a name=setsize><h5>Set Size</h5></a>
 &nbsp;<br>
 <p>
-Number of similar structures used to compute the resulsts
+Number of similar structures used to compute the results
 </p>
 &nbsp;<br>
 <h4>DOPE</h4>
@@ -146,7 +146,7 @@ Number of similar structures used to compute the resulsts
 <a name=z-dope><h5>z-Dope</h5></a>
 &nbsp;<br>
 <p>
-Using the probability theory, we derive an atomic distance- dependent
+Using probability theory, we derive an atomic distance- dependent
 statistical potential from a sample of native structures that does not depend
 on any adjustable parameters (Discrete Optimized Protein Energy, or DOPE).
 DOPE is based on an improved reference state that corresponds to
@@ -169,8 +169,9 @@ number of dope restraints acting on each residue.
 <a name=ga341><h5>GA341</h5></a>
 &nbsp;<br>
 <p>
-Score for the reliability of a Model, derived from statistical potentials (F.
-Melo, R. Sanchez, A. Sali,2001 PDF). A model is predicted to be reliable when the
+Score for the reliability of a model, derived from statistical potentials
+(<a href="http://salilab.org/pdf/Melo_ProteinSci_2002.pdf">F.  Melo,
+R. Sanchez, A. Sali,2002</a>). A model is predicted to be reliable when the
 model score is higher than a pre-specified cutoff (0.7). A reliable model has
 a probability of the correct fold that is larger than 95%. A fold is correct
 when at least 30% of its Calpha atoms superpose within 3.5A of their correct
