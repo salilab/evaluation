@@ -88,6 +88,19 @@ sub get_index_page {
  
 }
 
+sub get_submit_parameter_help {
+    my $self = shift;
+    return [
+        $self->parameter("name", "Job name", 1),
+        $self->parameter("modkey", "MODELLER license key"),
+        $self->file_parameter("model_file",
+                              "PDB file containing model to be evaluated"),
+        $self->file_parameter("alignment_file", "Alignment file in PIR format",
+                              1),
+        $self->parameter("seq_ident", "Target-template sequence identity", 1)
+    ];
+}
+
 sub get_submit_page {
 
     my ($self) = @_;
@@ -107,6 +120,9 @@ sub get_submit_page {
     my $pdb_input = "$jobdir/input.pdb";
     my $job_summary = "$jobdir/summary.txt";
     $seq_ident=~s/%//g;
+    if (!$seq_ident) {
+       $seq_ident=30;
+    }
     if ( !($seq_ident =~ /^\d+$/ )) { 
        throw saliweb::frontend::InputValidationError("Sequence identity must be an "
                                              ."integer between 0 and 100");
