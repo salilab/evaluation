@@ -22,7 +22,9 @@ sub get_navigation_links {
 }
 
 sub get_project_menu {
-return <<MENU;
+    my $self = shift;
+    my $version = $self->version;
+    return <<MENU;
         <p>&nbsp;</p>
 <h4><small>Authors:</small></h4>
 <p>David Eramian<br>
@@ -33,7 +35,7 @@ Ben Webb</p>
 <br />
 <h4><small>Corresponding Author:</small></h4>
 <p>Andrej Sali</p>
-
+<p><i>Version $version</i></p>
 MENU
 }
 
