@@ -21,7 +21,7 @@
 
 <h4>DOPE</h4>
 <ul>
-<li><a href="#z-dope">z-Dope</a></li>
+<li><a href="#z-dope">z-DOPE</a></li>
 </ul>
 
 <h4>GA341</h4>
@@ -143,7 +143,7 @@ Number of similar structures used to compute the results
 &nbsp;<br>
 <h4>DOPE</h4>
 &nbsp;<br>
-<a name=z-dope><h5>z-Dope</h5></a>
+<a name=z-dope><h5>z-DOPE</h5></a>
 &nbsp;<br>
 <p>
 Using probability theory, we derive an atomic distance- dependent
@@ -156,10 +156,10 @@ of the native structures. The evaluation server reports the normalized z-DOPE
 score. 
 </p>
 &nbsp;<br>
-<a name=dope_profile><h5>Dope Profile</h5></a>
+<a name=dope_profile><h5>DOPE Profile</h5></a>
 <p>
-Dope energy profile, smoothed over a 15 residue window, normalized over the
-number of dope restraints acting on each residue. 
+DOPE energy profile, smoothed over a 15 residue window, normalized over the
+number of DOPE restraints acting on each residue. 
 </p>
 &nbsp;<br>
 <h4>GA341</h4>
@@ -180,16 +180,16 @@ positions.
 &nbsp;<br>
 <a name=z-surf><h5>z-surf</h5></a>
 <p>
-A surface statistical potential that contributes to the GA341.
+A surface statistical potential that contributes to GA341.
 </p>
 &nbsp;<br>
 <a name=z-pair><h5>z-pair</h5></a>
 <p>
-A pairwise statistical potential that contributes to the GA341.
+A pairwise statistical potential that contributes to GA341.
 </p>
 &nbsp;<br>
 <a name=z-combi><h5>z-combi</h5></a>
 <p>
-A combined statistical potential that contributes to the GA341.
+A combined statistical potential that contributes to GA341.
 </p>
 
