@@ -140,11 +140,15 @@ sub get_submit_page {
     open(SUM, ">$job_summary")
        or throw saliweb::frontend::InternalError("Cannot open $job_summary: $!");
     print SUM "JobName\t$job_name\n";
-    print SUM "Email\t$email\n";
+    if (defined($email)) {
+        print SUM "Email\t$email\n";
+    }
     print SUM "ModKey\t$modkey\n";
     print SUM "SeqIdent\t$seq_ident\n";
     print SUM "ModelFile\t$model_file\n";
-    print SUM "AlignmentFile\t$alignment_file\n";
+    if (defined($alignment_file)) {
+        print SUM "AlignmentFile\t$alignment_file\n";
+    }
     close (SUM);
 
     open(INPDB, ">$pdb_input")
@@ -351,11 +355,7 @@ sub display_failed_job {
 
 sub allow_file_download {
     my ($self,$file) =@_;
-    if (grep/dope_profile/,$file) {
-        return 1;
-    } elsif ($file eq "evaluation.xml") {
-        return 1;
-    }
-    return $file eq 'dope_profile.A.png' or $file eq 'modeller.log';
+    return $file eq "evaluation.xml" || $file eq 'dope_profile.A.png'
+           || $file eq 'modeller.log' || grep/dope_profile/,$file;
 }
 
