@@ -42,9 +42,9 @@ MENU
 sub get_footer {
     my ($self) = @_;
     my $footer="<p>For more information, please consult the following publications:"
-              ." <b>TSVMod</b>: D. Eramian, N. Eswar, M.Y. Shen, A. Sali. How well can the accuracy of comparative protein structure models be predicted? Protein Sci 17, 1881-1893, 2008<a href=\"//salilab.org/pdf/Eramian_ProteinSci_2008.pdf\"><img width=\"12px\" src=\"//salilab.org/img/pdf.gif\" border=0></a>. "
-              ."<b>DOPE</b>: M.Y. Shen, A. Sali. Statistical potential for assessment and prediction of protein structures. Protein Sci 15, 2507-2524, 2006<a href=\"//salilab.org/pdf/Colubri_JMolBiol_2006.pdf\"><img width=\"12px\" src=\"//salilab.org/img/pdf.gif\" border=0></a>. "
-              ."<b>GA341</b>: 	F. Melo, R. Sanchez, A. Sali. Statistical potentials for fold assessment. Protein Sci 11, 430-448, 2002<a href=\"//salilab.org/pdf/Melo_ProteinSci_2002.pdf\"><img width=\"12px\" src=\"//salilab.org/img/pdf.gif\" border=0></a></p>. ";
+              ." <b>TSVMod</b>: D. Eramian, N. Eswar, M.Y. Shen, A. Sali. How well can the accuracy of comparative protein structure models be predicted? Protein Sci 17, 1881-1893, 2008<a href=\"//salilab.org/pdf/Eramian_ProteinSci_2008.pdf\"><img width=\"12px\" src=\"//salilab.org/img/pdf.gif\" border=\"0\" alt=\"PDF\" /></a>. "
+              ."<b>DOPE</b>: M.Y. Shen, A. Sali. Statistical potential for assessment and prediction of protein structures. Protein Sci 15, 2507-2524, 2006<a href=\"//salilab.org/pdf/Colubri_JMolBiol_2006.pdf\"><img width=\"12px\" src=\"//salilab.org/img/pdf.gif\" border=\"0\" alt=\"PDF\" /></a>. "
+              ."<b>GA341</b>: 	F. Melo, R. Sanchez, A. Sali. Statistical potentials for fold assessment. Protein Sci 11, 430-448, 2002<a href=\"//salilab.org/pdf/Melo_ProteinSci_2002.pdf\"><img width=\"12px\" src=\"//salilab.org/img/pdf.gif\" border=\"0\" alt=\"PDF\" /></a></p>. ";
     return "$footer";
 }
 
@@ -59,26 +59,26 @@ sub get_index_page {
     push @table,
                 $q->Tr(
                     $q->td("Job Name",$self->help_link("jobname")),
-                    $q->td($q->textfield({-name=>"name",-size=>"20",-max_size=>"200"}))),
+                    $q->td($q->textfield({-name=>"name",-size=>"20",-maxlength=>"200"}))),
                 $q->Tr(
                     $q->td("Modeller Key",$self->help_link("modkey")),
                     $q->td($q->textfield({-name=>"modkey",
                                           -value=>$self->modeller_key,
-                                          -size=>"20",-max_size=>"200"}))),
+                                          -size=>"20",-maxlength=>"200"}))),
                 $q->Tr(
                     $q->td("Email Address (optional)",$self->help_link("email")),
-                    $q->td($q->textfield({-name=>"email",-size=>"20",-max_size=>"200"}))),
+                    $q->td($q->textfield({-name=>"email",-size=>"20",-maxlength=>"200"}))),
                 $q->Tr(     
                     $q->td("Upload Model File (PDB Format)",$self->help_link("model_file")),
-                    $q->td($q->filefield({-name=>"model_file",-size=>"20",-max_size=>"200"}))),
+                    $q->td($q->filefield({-name=>"model_file",-size=>"20",-maxlength=>"200"}))),
                 $q->Tr(
                     $q->td("Upload Alignment File (PIR Format, recommended)",
                           $self->help_link("alignment_file")),
-                    $q->td($q->filefield({-name=>"alignment_file",-size=>"20",-max_size=>"200"}))),
+                    $q->td($q->filefield({-name=>"alignment_file",-size=>"20",-maxlength=>"200"}))),
                 $q->Tr(
                     $q->td("Target-Template Sequence Identity <br />(for GA341 score)",
                           $self->help_link("seq_ident")),
-                    $q->td($q->textfield({-name=>"seq_ident",-size=>"20",-max_size=>"200"})));
+                    $q->td($q->textfield({-name=>"seq_ident",-size=>"20",-maxlength=>"200"})));
 
     push @table, $q->Tr( $q->td("&nbsp;"),$q->td({-align=>"left"},
                                   $q->submit(-label=>'Start evaluating'),
@@ -86,7 +86,7 @@ sub get_index_page {
     my $table="<table>".join("",@table)."</table>";
        
                
-    return $return.$table."";
+    return $return.$table.$q->end_form()."";
  
 }
 
@@ -328,7 +328,7 @@ sub display_ok_job {
     if (-f "dope_profile.png") {
         push @table,$q->Tr($q->td({-colspat=>"2"},"<h4><br />Dope Profile".$self->help_link("dope_profile")."</h4>"));
         my $imageurl=$job->get_results_file_url("dope_profile.png");
-        $profile=$q->Tr($q->td({-colspan=>3},"<img src=$imageurl>"));
+        $profile=$q->Tr($q->td({-colspan=>3},"<img src=$imageurl />"));
     } else {
         $error++;
         push @table,$q->Tr($q->td({-colspan=>"2"},"<p><br />Dope Profile not available".$self->help_link("dope_profile")."</p>"));
