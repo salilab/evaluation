@@ -27,8 +27,8 @@ sub get_project_menu {
     return <<MENU;
         <p>&nbsp;</p>
 <h4><small>Authors:</small></h4>
-<p>David Eramian<br>
-Min-Yi Shen<br>
+<p>David Eramian<br />
+Min-Yi Shen<br />
 Francisco Melo</p>
 <p>Ursula Pieper<br />
 Ben Webb</p>
@@ -76,7 +76,7 @@ sub get_index_page {
                           $self->help_link("alignment_file")),
                     $q->td($q->filefield({-name=>"alignment_file",-size=>"20",-max_size=>"200"}))),
                 $q->Tr(
-                    $q->td("Target-Template Sequence Identity <br>(for GA341 score)",
+                    $q->td("Target-Template Sequence Identity <br />(for GA341 score)",
                           $self->help_link("seq_ident")),
                     $q->td($q->textfield({-name=>"seq_ident",-size=>"20",-max_size=>"200"})));
 
@@ -218,7 +218,7 @@ sub display_ok_job {
     my ($return,@table);
     my $error;
     $return= $q->p("Job '<b>" . $job->name . "</b>' has completed.")."<p>";
-    push @table,$q->Tr($q->td({-colspat=>"2"},"<h4><br>TSVMod Results</h4>"));
+    push @table,$q->Tr($q->td({-colspat=>"2"},"<h4><br />TSVMod Results</h4>"));
     
     my $tsvmod_file="input.tsvmod.pred";
     if (!(-e $tsvmod_file)) {
@@ -241,7 +241,7 @@ sub display_ok_job {
             push @table,$q->Tr($q->td("Features Used:".$self->help_link("features")),$q->td(" $featurecount"));
             push @table,$q->Tr($q->td("Relax Count:".$self->help_link("relaxcount")),$q->td(" $relaxcount"));
             push @table,$q->Tr($q->td("Set Size:".$self->help_link("setsize")),$q->td(" $size"));
-            push @table,$q->Tr($q->td("&nbsp;<br>Predicted RMSD:".$self->help_link("predrmsd")),$q->td("&nbsp;<br>$rmsd"));
+            push @table,$q->Tr($q->td("&nbsp;<br />Predicted RMSD:".$self->help_link("predrmsd")),$q->td("&nbsp;<br />$rmsd"));
             push @table,$q->Tr($q->td("Predicted Native Overlap (3.5):".$self->help_link("predno35")),$q->td(" $no35"));
             if (!$featurecount) {
                 push @table,$q->Tr($q->td({-colspan=>"3"},$q->b($line)));
@@ -268,7 +268,7 @@ sub display_ok_job {
                 } elsif ($key eq "Set_size:") {
                     push @table,$q->Tr($q->td("Set Size:".$self->help_link("setsize")),$q->td(" $value"));
                 } elsif ($key eq "Predicted_RMSD:") {
-                    push @table,$q->Tr($q->td("&nbsp;<br>Predicted RMSD:".$self->help_link("predrmsd")),$q->td("&nbsp;<br>$value"));
+                    push @table,$q->Tr($q->td("&nbsp;<br />Predicted RMSD:".$self->help_link("predrmsd")),$q->td("&nbsp;<br />$value"));
                 } elsif ($key eq "Pred_NO35:") {
                     push @table,$q->Tr($q->td("Predicted Native Overlap (3.5):".$self->help_link("predno35")),$q->td(" $value"));
                 } elsif ($key eq "input.pdb") {
@@ -280,7 +280,7 @@ sub display_ok_job {
             }
         }
     }
-    push @table,$q->Tr($q->td({-colspat=>"2"},"<h4><br>Modeller Scoring Results</h4>"));
+    push @table,$q->Tr($q->td({-colspat=>"2"},"<h4><br />Modeller Scoring Results</h4>"));
     open ("PRED","modeller.results");
     my @chains;
     my $oldchain="";
@@ -296,7 +296,7 @@ sub display_ok_job {
              $oldchain=$chain;
          }
          if ($key eq "ZDOPE") {
-            push @table,$q->Tr($q->td("z-Dope:".$self->help_link("z-dope")."<br>&nbsp;"),
+            push @table,$q->Tr($q->td("z-Dope:".$self->help_link("z-dope")."<br />&nbsp;"),
                                $q->td(" $value"),$q->td({-width=>"300px"},"&nbsp;"));
          } elsif ($key eq "GA341") {
             push @table,$q->Tr($q->td("GA341:".$self->help_link("ga341")),
@@ -311,11 +311,11 @@ sub display_ok_job {
             push @table,$q->Tr($q->td("z-combi:".$self->help_link("z-combi")),
                                $q->td(" $value"),$q->td({-width=>"300px"},"&nbsp;"));
          } elsif ($key eq "SeqIdent") {
-            push @table,$q->Tr($q->td("Sequence Identity".$self->help_link("seq_ident")."<br>&nbsp;"),
+            push @table,$q->Tr($q->td("Sequence Identity".$self->help_link("seq_ident")."<br />&nbsp;"),
                                $q->td(" $value"),$q->td({-width=>"300px"},"&nbsp;"));
          } elsif ($key eq "Input_SeqIdent") {
             push @table,$q->Tr($q->td("Sequence Identity".$self->help_link("seq_ident")
-                                      ."<br>(provided by user)<br>&nbsp;"),
+                                      ."<br />(provided by user)<br />&nbsp;"),
                                $q->td(" $value"),$q->td({-width=>"300px"},"&nbsp;"));
          } 
     }
@@ -326,19 +326,19 @@ sub display_ok_job {
 
     my $xmlurl=$job->get_results_file_url("evaluation.xml");
     if (-f "dope_profile.png") {
-        push @table,$q->Tr($q->td({-colspat=>"2"},"<h4><br>Dope Profile".$self->help_link("dope_profile")."</h4>"));
+        push @table,$q->Tr($q->td({-colspat=>"2"},"<h4><br />Dope Profile".$self->help_link("dope_profile")."</h4>"));
         my $imageurl=$job->get_results_file_url("dope_profile.png");
         $profile=$q->Tr($q->td({-colspan=>3},"<img src=$imageurl>"));
     } else {
         $error++;
-        push @table,$q->Tr($q->td({-colspan=>"2"},"<p><br>Dope Profile not available".$self->help_link("dope_profile")."</p>"));
+        push @table,$q->Tr($q->td({-colspan=>"2"},"<p><br />Dope Profile not available".$self->help_link("dope_profile")."</p>"));
     }
     push @table,$profile;
     if ($error >= 3) {
         push @table,$q->Tr($q->td({-colspan=>"2"},"<p><font color=red>Multiple Errors occurred! Please check your input PDB file.</font></p>"));
     }
     $return.=$q->table({-width=>"300px"},join("",@table));
-    $return .= "<br>".$job->get_results_available_time();
+    $return .= "<br />".$job->get_results_available_time();
     return $return;
 }
 
