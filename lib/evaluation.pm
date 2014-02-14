@@ -225,6 +225,7 @@ sub display_ok_job {
         $tsvmod_file="input.pred";
     }
     open ("PRED","$tsvmod_file");
+       or throw saliweb::frontend::InternalError("Cannot open TSVMod file: $!");
     # Modelfile|Chain|TSVMod type|Feature Count|Relax Count|Size|Predicted RMSD|Predicted NO35|GA341|Pair|Surf|Comb|z-Dope
     # ../tests/model.pdb|_|MatchByTemplate|ALL|1|89|2.740|0.880|1.000000|-0.601924|-0.5387405|-0.7910116|-0.0515078
     my $newformat=0;
@@ -256,6 +257,8 @@ sub display_ok_job {
     }
     if ($newformat == 0) {
         open ("PRED","input.pdb.results");
+            or throw saliweb::frontend::InternalError(
+                       "Cannot open input.pdb.results: $!");
         while (my $line=<PRED>) {
             (my $key,my $value)=split(/\s+/,$line);
             unless ($key eq "Input_PDB:") {
@@ -281,7 +284,9 @@ sub display_ok_job {
         }
     }
     push @table,$q->Tr($q->td({-colspat=>"2"},"<h4><br />Modeller Scoring Results</h4>"));
-    open ("PRED","modeller.results");
+    open ("PRED","modeller.results")
+       or throw saliweb::frontend::InternalError(
+                            "Cannot open modeller.results: $!");
     my @chains;
     my $oldchain="";
     while (my $line=<PRED>) {
