@@ -1,6 +1,11 @@
 from optparse import OptionParser
 import sys
 import os
+
+import matplotlib
+# Force matplotlib (and pylab) to not use any X backend
+# (we don't have a display).
+matplotlib.use('Agg')
 import pylab
 
 from modeller import *
