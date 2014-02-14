@@ -32,12 +32,12 @@ expire: 1d
 
 [scoring]
 evaluation_script: score_tsvmod.pl
-modeller: modpy.sh
+modeller_setup: module load modeller
 modeller_script: score_modeller.py
 """)
         c = evaluation.Config('config')
         self.assertEqual(c.evaluation_script, 'score_tsvmod.pl')
-        self.assertEqual(c.modeller, 'modpy.sh')
+        self.assertEqual(c.modeller_setup, 'module load modeller')
         self.assertEqual(c.modeller_script, 'score_modeller.py')
         os.unlink('config')
 

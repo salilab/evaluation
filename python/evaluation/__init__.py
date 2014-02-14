@@ -51,9 +51,9 @@ class Job(saliweb.backend.Job):
         print >>fh,"cd "+directory
         print >>fh,"echo STARTED >job-state"
         print >>fh,evaluation_script+">&evaluation.log"
-        print >>fh, self.config.modeller + " python " \
-                    + self.config.modeller_script + " --model input.pdb " \
-                    + seq_ident + ">&modeller.log"
+        print >>fh, self.config.modeller_setup
+        print >>fh, "python " + self.config.modeller_script \
+                    + " --model input.pdb " + seq_ident + ">&modeller.log"
         print >>fh, "echo \"<evaluation>\" >evaluation.txt\n"
         print >>fh, "cat *.xml >>evaluation.txt\n"
         print >>fh, "echo \"</evaluation>\" >>evaluation.txt\n"
@@ -70,7 +70,7 @@ class Config(saliweb.backend.Config):
         saliweb.backend.Config.populate(self, config)
         # Read our service-specific configuration
         self.evaluation_script = config.get('scoring', 'evaluation_script')
-        self.modeller = config.get('scoring', 'modeller')
+        self.modeller_setup = config.get('scoring', 'modeller_setup')
         self.modeller_script = config.get('scoring', 'modeller_script')
 
 

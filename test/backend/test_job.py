@@ -10,7 +10,7 @@ class JobTests(saliweb.test.TestCase):
     def make_test_job(self, jobcls, state):
         j = saliweb.test.TestCase.make_test_job(self, jobcls, state)
         j.config.evaluation_script = 'evalscript'
-        j.config.modeller = 'modpy'
+        j.config.modeller_setup = 'module load modeller'
         j.config.modeller_script = 'runmod'
         return j
 
@@ -37,8 +37,9 @@ class JobTests(saliweb.test.TestCase):
             f.write('SequenceIdentity: %s\n' % seqid)
             f.close()
             r = j.run()
+            self.assert_in_file('score_all.sh', 'module load modeller')
             self.assert_in_file('score_all.sh',
-                    'modpy python runmod --model input.pdb  --seq_ident %s>' \
+                    'python runmod --model input.pdb  --seq_ident %s>' \
                     % exp_seqid)
 
     def test_run_align_model(self):
