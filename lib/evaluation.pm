@@ -301,7 +301,7 @@ sub display_ok_job {
              $oldchain=$chain;
          }
          if ($key eq "ZDOPE") {
-            push @table,$q->Tr($q->td("z-Dope:".$self->help_link("z-dope")."<br />&nbsp;"),
+            push @table,$q->Tr($q->td("z-DOPE:".$self->help_link("z-dope")."<br />&nbsp;"),
                                $q->td(" $value"),$q->td({-width=>"300px"},"&nbsp;"));
          } elsif ($key eq "GA341") {
             push @table,$q->Tr($q->td("GA341:".$self->help_link("ga341")),
@@ -331,12 +331,12 @@ sub display_ok_job {
 
     my $xmlurl=$job->get_results_file_url("evaluation.xml");
     if (-f "dope_profile.png") {
-        push @table,$q->Tr($q->td({-colspat=>"2"},"<h4><br />Dope Profile".$self->help_link("dope_profile")."</h4>"));
+        push @table,$q->Tr($q->td({-colspat=>"2"},"<h4><br />DOPE Profile".$self->help_link("dope_profile")."</h4>"));
         my $imageurl=$job->get_results_file_url("dope_profile.png");
         $profile=$q->Tr($q->td({-colspan=>3},"<img src=$imageurl />"));
     } else {
         $error++;
-        push @table,$q->Tr($q->td({-colspan=>"2"},"<p><br />Dope Profile not available".$self->help_link("dope_profile")."</p>"));
+        push @table,$q->Tr($q->td({-colspan=>"2"},"<p><br />DOPE Profile not available".$self->help_link("dope_profile")."</p>"));
     }
     push @table,$profile;
     if ($error >= 3) {
