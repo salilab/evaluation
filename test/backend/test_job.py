@@ -60,5 +60,16 @@ class JobTests(saliweb.test.TestCase):
         self.assert_in_file('score_all.sh',
                       'evalscript -model input.pdb -alignment alignment.pir>')
 
+    def test_postprocess(self):
+        """Test Job.postprocess()"""
+        j = self.make_test_job(evaluation.Job, 'COMPLETED')
+        d = saliweb.test.RunInDir(j.directory)
+        self.assertRaises(evaluation.MissingOutputError, j.postprocess)
+        open('modeller.results', 'w')
+        self.assertRaises(evaluation.MissingOutputError, j.postprocess)
+        open('input.tsvmod.results', 'w')
+        j.postprocess()
+
+
 if __name__ == '__main__':
     unittest.main()

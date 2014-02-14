@@ -2,6 +2,8 @@ import saliweb.backend
 import os
 import sys
 
+class MissingOutputError(Exception): pass
+
 
 class Job(saliweb.backend.Job):
 
@@ -63,6 +65,11 @@ class Job(saliweb.backend.Job):
         fh.close()
         r = self.runnercls("cd "+directory+"; chmod +x "+script+";./"+script)
         return r 
+
+    def postprocess(self):
+        for f in ('modeller.results', 'input.tsvmod.results'):
+            if not os.path.exists(f):
+                raise MissingOutputError("File %s was not generated" % f)
 
 
 class Config(saliweb.backend.Config):
