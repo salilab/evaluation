@@ -224,7 +224,7 @@ sub display_ok_job {
     if (!(-e $tsvmod_file)) {
         $tsvmod_file="input.pred";
     }
-    open ("PRED","$tsvmod_file");
+    open ("PRED","$tsvmod_file")
        or throw saliweb::frontend::InternalError("Cannot open TSVMod file: $!");
     # Modelfile|Chain|TSVMod type|Feature Count|Relax Count|Size|Predicted RMSD|Predicted NO35|GA341|Pair|Surf|Comb|z-Dope
     # ../tests/model.pdb|_|MatchByTemplate|ALL|1|89|2.740|0.880|1.000000|-0.601924|-0.5387405|-0.7910116|-0.0515078
@@ -256,7 +256,7 @@ sub display_ok_job {
         $error++;
     }
     if ($newformat == 0) {
-        open ("PRED","input.pdb.results");
+        open ("PRED","input.pdb.results")
             or throw saliweb::frontend::InternalError(
                        "Cannot open input.pdb.results: $!");
         while (my $line=<PRED>) {
