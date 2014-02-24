@@ -36,5 +36,6 @@ my $t = new saliweb::Test('evaluation');
     like($ret, '/Your job has been submitted to the server! Your ' .
          'job ID is testjob/ms',
          "submit page HTML");
+    chdir('/');
 }
 
