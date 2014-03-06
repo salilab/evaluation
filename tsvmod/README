@@ -1,0 +1,8 @@
+This web service needs TSVMod. To install,
+
+1. Go to /modbase4/home/evaluation/service and run
+svn export https://svn.salilab.org/TSVMod tsvmod
+
+2. Replace tsvmod/trunk/conf/tsvmod.conf with the file in this directory
+
+3. Extract the two .tgz files in tsvmod/database/
