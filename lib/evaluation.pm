@@ -216,7 +216,7 @@ sub get_results_page {
 sub display_ok_job {
     my ($self, $q, $job) = @_;
     my ($return,@table);
-    my $error;
+    my $error = 0;
     $return= $q->p("Job '<b>" . $job->name . "</b>' has completed.")."<p>";
     push @table,$q->Tr($q->td({-colspan=>"2"},"<h4><br />TSVMod Results</h4>"));
     
