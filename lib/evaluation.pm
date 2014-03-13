@@ -290,6 +290,10 @@ sub display_ok_job {
     my @chains;
     my $oldchain="";
     while (my $line=<PRED>) {
+         # Skip blank lines
+         if ($line =~ /^\s*$/) {
+            next;
+         }
         (my $chain,my $key,my $value)=split(/\s+/,$line);
          push @chains,$chain;
          $value=sprintf "%.3f",$value;
