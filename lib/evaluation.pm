@@ -218,7 +218,7 @@ sub display_ok_job {
     my ($return,@table);
     my $error;
     $return= $q->p("Job '<b>" . $job->name . "</b>' has completed.")."<p>";
-    push @table,$q->Tr($q->td({-colspat=>"2"},"<h4><br />TSVMod Results</h4>"));
+    push @table,$q->Tr($q->td({-colspan=>"2"},"<h4><br />TSVMod Results</h4>"));
     
     my $tsvmod_file="input.tsvmod.pred";
     if (!(-e $tsvmod_file)) {
@@ -283,7 +283,7 @@ sub display_ok_job {
             }
         }
     }
-    push @table,$q->Tr($q->td({-colspat=>"2"},"<h4><br />Modeller Scoring Results</h4>"));
+    push @table,$q->Tr($q->td({-colspan=>"2"},"<h4><br />Modeller Scoring Results</h4>"));
     open ("PRED","modeller.results")
        or throw saliweb::frontend::InternalError(
                             "Cannot open modeller.results: $!");
@@ -297,7 +297,7 @@ sub display_ok_job {
             $error++;
             push @table,$q->Tr($q->td({-colspan=>"2"},$line.$self->help_link("modeller_error")));
          } elsif (($chain ne $oldchain) && ($chain ne "")) {
-             push @table,$q->Tr($q->td({-colspat=>"2"},"<h4>Chain ${chain}</h4>"));
+             push @table,$q->Tr($q->td({-colspan=>"2"},"<h4>Chain ${chain}</h4>"));
              $oldchain=$chain;
          }
          if ($key eq "ZDOPE") {
@@ -331,7 +331,7 @@ sub display_ok_job {
 
     my $xmlurl=$job->get_results_file_url("evaluation.xml");
     if (-f "dope_profile.png") {
-        push @table,$q->Tr($q->td({-colspat=>"2"},"<h4><br />DOPE Profile".$self->help_link("dope_profile")."</h4>"));
+        push @table,$q->Tr($q->td({-colspan=>"2"},"<h4><br />DOPE Profile".$self->help_link("dope_profile")."</h4>"));
         my $imageurl=$job->get_results_file_url("dope_profile.png");
         $profile=$q->Tr($q->td({-colspan=>3},"<img src=$imageurl />"));
     } else {
