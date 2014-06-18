@@ -21,24 +21,24 @@ class Job(saliweb.backend.Job):
             model=""
         seq_ident=0
         if os.path.exists("parameters.txt"):
-           fh=open("parameters.txt")
-           while 1:
-               line = fh.readline()
-               if not line:
-                   break
-               (key,value)=line.split(":")
-               if key == "SequenceIdentity":
-                   if not value:
-                       value = 30
-                   try: 
-                       seq_ident=float(value)
-                   except ValueError:
-                       raise TypeError("Sequence Identity %s contains disallowed characters"
-                                       % (seq_ident))
-                   if seq_ident < 1.1:
-                       seq_ident *= 100.
+            fh=open("parameters.txt")
+            while 1:
+                line = fh.readline()
+                if not line:
+                    break
+                (key,value)=line.split(":")
+                if key == "SequenceIdentity":
+                    if not value:
+                        value = 30
+                    try:
+                        seq_ident=float(value)
+                    except ValueError:
+                        raise TypeError("Sequence Identity %s contains disallowed characters"
+                                        % (seq_ident))
+                    if seq_ident < 1.1:
+                        seq_ident *= 100.
 
-           fh.close()
+            fh.close()
 
         directory=os.getcwd()
         evaluation_script = self.config.evaluation_script \
@@ -64,7 +64,7 @@ class Job(saliweb.backend.Job):
         print >>fh,"echo DONE >job-state"
         fh.close()
         r = self.runnercls("cd "+directory+"; chmod +x "+script+";./"+script)
-        return r 
+        return r
 
     def postprocess(self):
         for f in ('modeller.results', 'input.tsvmod.results'):
@@ -85,4 +85,3 @@ def get_web_service(config_file):
     db = saliweb.backend.Database(Job)
     config = Config(config_file)
     return saliweb.backend.WebService(config, db)
-

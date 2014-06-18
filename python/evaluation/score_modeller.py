@@ -37,13 +37,13 @@ def get_options():
 
     parser.add_option("--model", type="string", metavar="FILE",
                       help="""Path and Filename of models file (PDB format)""")
-    parser.add_option("--seq_ident", type="string", 
+    parser.add_option("--seq_ident", type="string",
                       help="""Sequence Identity to Template PDB File.
-If no sequence identity is given, either here or in the model file, 
+If no sequence identity is given, either here or in the model file,
 only the z-dope score will be computed.""")
 
     opts, args = parser.parse_args()
-    if (not opts.model): 
+    if (not opts.model):
         parser.error("Cannot proceed without --model (input pdb file)")
     return opts
 
@@ -57,18 +57,18 @@ def main():
     env.libs.topology.read(file='$(LIB)/top_heav.lib')
     env.libs.parameters.read(file='$(LIB)/par.lib')
 
-    try: 
+    try:
         mdl=complete_pdb(env,opts.model, transfer_res_num=True)
-    except: 
+    except:
         print >>fh, "Error in Modelfile: Not a valid PDB file\n"
         print >>fhxml, "    <modeller_results>\n        <type>Error in Modelfile: Not a valid PDB file<\type>\n    </modeller_results>\n"
         sys.exit("Error in Modelfile: Not a valid PDB file")
     i=0
     colors=["green","red","blue","purple","green","red","blue","purple"]
     color=colors[i]
-    
+
     for c in mdl.chains:
-        (c.name, len(c.residues)) 
+        (c.name, len(c.residues))
         selected_chain=complete_pdb(env,opts.model,model_segment=('FIRST:'+c.name,'LAST:'+c.name))
         if not c.name:
             c.name="A"
@@ -92,7 +92,7 @@ def main():
         except:
             i=0
             color=colors[i]
-            
+
 
         try:
             (ga341, compactness, e_native_pair, e_native_surf, e_native_comb, \
@@ -141,7 +141,7 @@ def main():
     fh.close
     fhxml.close
 
-    
+
 
 if __name__ == '__main__':
     main()
