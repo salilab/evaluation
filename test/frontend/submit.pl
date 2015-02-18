@@ -1,6 +1,7 @@
 #!/usr/bin/perl -w
 
 use saliweb::Test;
+use saliweb::frontend;
 use Test::More 'no_plan';
 use Test::Exception;
 use File::Temp;
@@ -31,7 +32,7 @@ my $t = new saliweb::Test('evaluation');
 
     $cgi->param('model_file', \*FH);
     $cgi->param('job_name', 'test');
-    $cgi->param('modkey', '***REMOVED***');
+    $cgi->param('modkey', get_modeller_key());
     my $ret = $self->get_submit_page();
     like($ret, '/Your job has been submitted to the server! Your ' .
          'job ID is testjob/ms',
