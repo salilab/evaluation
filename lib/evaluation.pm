@@ -48,6 +48,12 @@ sub get_footer {
     return "$footer";
 }
 
+sub get_page_is_responsive {
+    my ($self, $page_name) = @_;
+    return $self->SUPER::get_page_is_responsive($page_name)
+           || $page_name eq 'index';
+}
+
 sub get_index_page {
     my ($self) = @_;
     my $q = $self->cgi;
