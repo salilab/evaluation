@@ -221,7 +221,7 @@ sub display_ok_job {
     my ($self, $q, $job) = @_;
     my ($return,@table);
     my $error = 0;
-    $return= $q->p("Job '<b>" . $job->name . "</b>' has completed.")."<p>";
+    $return= $q->p("Job '<b>" . $job->name . "</b>' has completed.");
     push @table,$q->Tr($q->td({-colspan=>"2"},"<h4><br />TSVMod Results</h4>"));
     
     my $tsvmod_file="input.tsvmod.pred";
@@ -341,11 +341,11 @@ sub display_ok_job {
     if (-f "dope_profile.svg") {
         push @table,$q->Tr($q->td({-colspan=>"2"},"<h4><br />DOPE Profile".$self->help_link("dope_profile")."</h4>"));
         my $imageurl=$job->get_results_file_url("dope_profile.svg");
-        $profile=$q->Tr($q->td({-colspan=>2},"<img src=$imageurl class=\"big\"/>"));
+        $profile=$q->Tr($q->td({-colspan=>2},"<img src=\"$imageurl\" class=\"big\" alt=\"DOPE profile\"/>"));
     } elsif (-f "dope_profile.png") {
         push @table,$q->Tr($q->td({-colspan=>"2"},"<h4><br />DOPE Profile".$self->help_link("dope_profile")."</h4>"));
         my $imageurl=$job->get_results_file_url("dope_profile.png");
-        $profile=$q->Tr($q->td({-colspan=>2},"<img src=$imageurl class=\"big\"/>"));
+        $profile=$q->Tr($q->td({-colspan=>2},"<img src=\"$imageurl\" class=\"big\" alt=\"DOPE profile\"/>"));
     } else {
         $error++;
         push @table,$q->Tr($q->td({-colspan=>"2"},"<p><br />DOPE Profile not available".$self->help_link("dope_profile")."</p>"));
