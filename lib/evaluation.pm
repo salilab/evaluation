@@ -247,7 +247,7 @@ sub display_ok_job {
             push @table,$q->Tr($q->td("Relax Count:".$self->help_link("relaxcount")),$q->td(" $relaxcount"));
             push @table,$q->Tr($q->td("Set Size:".$self->help_link("setsize")),$q->td(" $size"));
             push @table,$q->Tr($q->td("&nbsp;<br />Predicted RMSD:".$self->help_link("predrmsd")),$q->td("&nbsp;<br />$rmsd"));
-            push @table,$q->Tr($q->td("Predicted Native Overlap (3.5):".$self->help_link("predno35")),$q->td(" $no35"));
+            push @table,$q->Tr($q->td("Predicted Native Overlap (3.5&Aring;):".$self->help_link("predno35")),$q->td(" $no35"));
             if (!$featurecount) {
                 push @table,$q->Tr($q->td({-colspan=>"3"},$q->b($line)));
             }
@@ -277,7 +277,7 @@ sub display_ok_job {
                 } elsif ($key eq "Predicted_RMSD:") {
                     push @table,$q->Tr($q->td("&nbsp;<br />Predicted RMSD:".$self->help_link("predrmsd")),$q->td("&nbsp;<br />$value"));
                 } elsif ($key eq "Pred_NO35:") {
-                    push @table,$q->Tr($q->td("Predicted Native Overlap (3.5):".$self->help_link("predno35")),$q->td(" $value"));
+                    push @table,$q->Tr($q->td("Predicted Native Overlap (3.5&Aring;):".$self->help_link("predno35")),$q->td(" $value"));
                 } elsif ($key eq "input.pdb") {
                    push @table,$q->Tr($q->td({-colspan=>"3"},$line));
                 } elsif ($key eq "Error") {

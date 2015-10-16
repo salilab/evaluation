@@ -12,7 +12,7 @@
 <h4>TSVMod</h4>
 <ul>
 <li><a href="#predrmsd">Predicted RMSD</a></li>
-<li><a href="#predno35">Predicted Native Overlap (3.5)</a></li>
+<li><a href="#predno35">Predicted Native Overlap (3.5&Aring;)</a></li>
 <li><a href="#matchtype">Match Type</a></li>
 <li><a href="#features">Features Used</a></li>
 <li><a href="#relaxcount">Relax Count</a></li>
@@ -84,19 +84,19 @@ from the PDB header.
 </p>
 &nbsp;<br>
 <h4>TSVMod</h4>
-<p>TSVMod predicts the RMSD and the Native Overlap (at 3.5 Angstrom cutoff) of
+<p>TSVMod predicts the RMSD and the Native Overlap (at 3.5&Aring; cutoff) of
 a model with its native structure, using a support vector machine (SVM).<br>
 &nbsp;<br>
 <a name=predrmsd><h5>Predicted RMSD</h5></a></p>
 &nbsp;<br>
 <p>
-Predicted RMSD (all C-alpha atoms)
+Predicted RMSD (all C&alpha; atoms)
 </p>
 &nbsp;<br>
 <a name=predno35><h5>Predicted Native Overlap</h5></a>
 &nbsp;<br>
 <p>
-Predicted native overlap (3.5 Angstroms)
+Predicted native overlap (3.5&Aring;)
 </p>
 &nbsp;<br>
 <a name=matchtype><h5>Match Type</h5></a>
@@ -174,8 +174,8 @@ Score for the reliability of a model, derived from statistical potentials
 R. Sanchez, A. Sali, 2002</a>). A model is predicted to be reliable when the
 model score is higher than a pre-specified cutoff (0.7). A reliable model has
 a probability of the correct fold that is larger than 95%. A fold is correct
-when at least 30% of its Calpha atoms superpose within 3.5A of their correct
-positions. 
+when at least 30% of its C&alpha; atoms superpose within 3.5&Aring;
+of their correct positions.
 </p>
 &nbsp;<br>
 <a name=z-surf><h5>z-surf</h5></a>
