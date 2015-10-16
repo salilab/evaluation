@@ -84,6 +84,7 @@ def main():
             pylab.plot(profile, color=color, linewidth=2, label='Chain '+c.name)
             pylab.legend()
             pylab.savefig('dope_profile.png', dpi=65)
+            pylab.savefig('dope_profile.svg')
         except:
             pass
         i=i+1
