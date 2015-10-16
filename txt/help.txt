@@ -170,8 +170,8 @@ number of DOPE restraints acting on each residue.
 &nbsp;<br>
 <p>
 Score for the reliability of a model, derived from statistical potentials
-(<a href="http://salilab.org/pdf/Melo_ProteinSci_2002.pdf">F.  Melo,
-R. Sanchez, A. Sali,2002</a>). A model is predicted to be reliable when the
+(<a href="http://salilab.org/pdf/Melo_ProteinSci_2002.pdf">F. Melo,
+R. Sanchez, A. Sali, 2002</a>). A model is predicted to be reliable when the
 model score is higher than a pre-specified cutoff (0.7). A reliable model has
 a probability of the correct fold that is larger than 95%. A fold is correct
 when at least 30% of its Calpha atoms superpose within 3.5A of their correct
