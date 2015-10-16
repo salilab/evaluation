@@ -49,9 +49,7 @@ sub get_footer {
 }
 
 sub get_page_is_responsive {
-    my ($self, $page_name) = @_;
-    return $self->SUPER::get_page_is_responsive($page_name)
-           || $page_name eq 'index';
+    return 1; # All web pages should look OK on a smartphone
 }
 
 sub get_index_page {
@@ -243,8 +241,8 @@ sub display_ok_job {
         } elsif ($newformat == 1) {
             $tsvmod_ok=1;
             if ($chain eq "_") {$chain="A"};
-            push @table,$q->Tr($q->th({-colspan=>"2"},"Chain $chain".$self->help_link("chain")),$q->td({-width=>"300px"},"&nbsp;"));
-            push @table,$q->Tr($q->td("Match Type:".$self->help_link("matchtype")),$q->td(" $matchtype"));
+            push @table,$q->Tr($q->th({-colspan=>"2"},"Chain $chain".$self->help_link("chain")));
+            push @table,$q->Tr($q->td({-style=>"width:20em"}, "Match Type:".$self->help_link("matchtype")),$q->td(" $matchtype"));
             push @table,$q->Tr($q->td("Features Used:".$self->help_link("features")),$q->td(" $featurecount"));
             push @table,$q->Tr($q->td("Relax Count:".$self->help_link("relaxcount")),$q->td(" $relaxcount"));
             push @table,$q->Tr($q->td("Set Size:".$self->help_link("setsize")),$q->td(" $size"));
@@ -269,7 +267,7 @@ sub display_ok_job {
             (my $key,my $value)=split(/\s+/,$line);
             unless ($key eq "Input_PDB:") {
                 if ($key eq "Match_Type:") {
-                    push @table,$q->Tr($q->td("Match Type:".$self->help_link("matchtype")),$q->td(" $value"),$q->td({-width=>"300px"},"&nbsp;"));
+                    push @table,$q->Tr($q->td("Match Type:".$self->help_link("matchtype")),$q->td(" $value"));
                 } elsif ($key eq "Features_Used:") {
                     push @table,$q->Tr($q->td("Features Used:".$self->help_link("features")),$q->td(" $value"));
                 } elsif ($key eq "Relax_count:") {
@@ -312,26 +310,26 @@ sub display_ok_job {
          }
          if ($key eq "ZDOPE") {
             push @table,$q->Tr($q->td("z-DOPE:".$self->help_link("z-dope")."<br />&nbsp;"),
-                               $q->td(" $value"),$q->td({-width=>"300px"},"&nbsp;"));
+                               $q->td(" $value"));
          } elsif ($key eq "GA341") {
             push @table,$q->Tr($q->td("GA341:".$self->help_link("ga341")),
-                               $q->td(" $value"),$q->td({-width=>"300px"},"&nbsp;"));
+                               $q->td(" $value"));
          } elsif ($key eq "Z-PAIR") {
             push @table,$q->Tr($q->td("z-pair:".$self->help_link("z-pair")),
-                               $q->td(" $value"),$q->td({-width=>"300px"},"&nbsp;"));
+                               $q->td(" $value"));
          } elsif ($key eq "Z-SURF") {
             push @table,$q->Tr($q->td("z-surf:".$self->help_link("z-surf")),
-                               $q->td(" $value"),$q->td({-width=>"300px"},"&nbsp;"));
+                               $q->td(" $value"));
          } elsif ($key eq "Z-COMBI") {
             push @table,$q->Tr($q->td("z-combi:".$self->help_link("z-combi")),
-                               $q->td(" $value"),$q->td({-width=>"300px"},"&nbsp;"));
+                               $q->td(" $value"));
          } elsif ($key eq "SeqIdent") {
             push @table,$q->Tr($q->td("Sequence Identity".$self->help_link("seq_ident")."<br />&nbsp;"),
-                               $q->td(" $value"),$q->td({-width=>"300px"},"&nbsp;"));
+                               $q->td(" $value"));
          } elsif ($key eq "Input_SeqIdent") {
             push @table,$q->Tr($q->td("Sequence Identity".$self->help_link("seq_ident")
                                       ."<br />(provided by user)<br />&nbsp;"),
-                               $q->td(" $value"),$q->td({-width=>"300px"},"&nbsp;"));
+                               $q->td(" $value"));
          } 
     }
     my $profile="";
@@ -343,11 +341,11 @@ sub display_ok_job {
     if (-f "dope_profile.svg") {
         push @table,$q->Tr($q->td({-colspan=>"2"},"<h4><br />DOPE Profile".$self->help_link("dope_profile")."</h4>"));
         my $imageurl=$job->get_results_file_url("dope_profile.svg");
-        $profile=$q->Tr($q->td({-colspan=>3},"<img src=$imageurl class=\"big\"/>"));
+        $profile=$q->Tr($q->td({-colspan=>2},"<img src=$imageurl class=\"big\"/>"));
     } elsif (-f "dope_profile.png") {
         push @table,$q->Tr($q->td({-colspan=>"2"},"<h4><br />DOPE Profile".$self->help_link("dope_profile")."</h4>"));
         my $imageurl=$job->get_results_file_url("dope_profile.png");
-        $profile=$q->Tr($q->td({-colspan=>3},"<img src=$imageurl class=\"big\"/>"));
+        $profile=$q->Tr($q->td({-colspan=>2},"<img src=$imageurl class=\"big\"/>"));
     } else {
         $error++;
         push @table,$q->Tr($q->td({-colspan=>"2"},"<p><br />DOPE Profile not available".$self->help_link("dope_profile")."</p>"));
@@ -356,7 +354,7 @@ sub display_ok_job {
     if ($error >= 3) {
         push @table,$q->Tr($q->td({-colspan=>"2"},"<p><font color=red>Multiple Errors occurred! Please check your input PDB file.</font></p>"));
     }
-    $return.=$q->table({-width=>"300px"},join("",@table));
+    $return.=$q->table({-width=>"100%"},join("",@table));
     $return .= "<br />".$job->get_results_available_time();
     return $return;
 }
