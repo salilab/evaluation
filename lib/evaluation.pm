@@ -340,10 +340,14 @@ sub display_ok_job {
     my @unique_chains = sort keys %saw;  # remove sort if undesired
 
     my $xmlurl=$job->get_results_file_url("evaluation.xml");
-    if (-f "dope_profile.png") {
+    if (-f "dope_profile.svg") {
+        push @table,$q->Tr($q->td({-colspan=>"2"},"<h4><br />DOPE Profile".$self->help_link("dope_profile")."</h4>"));
+        my $imageurl=$job->get_results_file_url("dope_profile.svg");
+        $profile=$q->Tr($q->td({-colspan=>3},"<img src=$imageurl class=\"big\"/>"));
+    } elsif (-f "dope_profile.png") {
         push @table,$q->Tr($q->td({-colspan=>"2"},"<h4><br />DOPE Profile".$self->help_link("dope_profile")."</h4>"));
         my $imageurl=$job->get_results_file_url("dope_profile.png");
-        $profile=$q->Tr($q->td({-colspan=>3},"<img src=$imageurl />"));
+        $profile=$q->Tr($q->td({-colspan=>3},"<img src=$imageurl class=\"big\"/>"));
     } else {
         $error++;
         push @table,$q->Tr($q->td({-colspan=>"2"},"<p><br />DOPE Profile not available".$self->help_link("dope_profile")."</p>"));
