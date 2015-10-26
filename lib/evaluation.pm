@@ -48,6 +48,15 @@ sub get_footer {
     return "$footer";
 }
 
+# Add our own CSS to the page header
+sub get_start_html_parameters {
+  my ($self, $style) = @_;
+  my %param = $self->SUPER::get_start_html_parameters($style);
+  push @{$param{-style}->{'-src'}}, 'html/modeval.css';
+  return %param;
+}
+
+
 sub get_page_is_responsive {
     return 1; # All web pages should look OK on a smartphone
 }
@@ -63,15 +72,16 @@ sub get_index_page {
     push @table,
                 $q->Tr(
                     $q->td("Job Name",$self->help_link("jobname")),
-                    $q->td($q->textfield({-name=>"name",-size=>"20",-maxlength=>"200"}))),
+                    $q->td($q->textfield({-name=>"name",-size=>"20",-maxlength=>"200",-class=>"wide"}))),
                 $q->Tr(
                     $q->td("Modeller Key",$self->help_link("modkey")),
                     $q->td($q->textfield({-name=>"modkey",
                                           -value=>$self->modeller_key,
-                                          -size=>"20",-maxlength=>"200"}))),
+                                          -size=>"20",-maxlength=>"200",
+                                          -class=>"wide"}))),
                 $q->Tr(
                     $q->td("Email Address (optional)",$self->help_link("email")),
-                    $q->td($q->textfield({-name=>"email",-size=>"20",-maxlength=>"200"}))),
+                    $q->td($q->textfield({-name=>"email",-size=>"20",-maxlength=>"200",-class=>"wide"}))),
                 $q->Tr(     
                     $q->td("Upload Model File (PDB Format)",$self->help_link("model_file")),
                     $q->td($q->filefield({-name=>"model_file",-size=>"20",-maxlength=>"200"}))),
@@ -82,7 +92,7 @@ sub get_index_page {
                 $q->Tr(
                     $q->td("Target-Template Sequence Identity <br />(for GA341 score)",
                           $self->help_link("seq_ident")),
-                    $q->td($q->textfield({-name=>"seq_ident",-size=>"20",-maxlength=>"200"})));
+                    $q->td($q->textfield({-name=>"seq_ident",-size=>"20",-maxlength=>"200",-class=>"wide"})));
 
     push @table, $q->Tr( $q->td("&nbsp;"),$q->td({-align=>"left"},
                                   $q->submit(-label=>'Start evaluating'),
