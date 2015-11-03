@@ -256,8 +256,8 @@ sub display_ok_job {
             push @table,$q->Tr($q->td("Features Used:".$self->help_link("features")),$q->td(" $featurecount"));
             push @table,$q->Tr($q->td("Relax Count:".$self->help_link("relaxcount")),$q->td(" $relaxcount"));
             push @table,$q->Tr($q->td("Set Size:".$self->help_link("setsize")),$q->td(" $size"));
-            push @table,$q->Tr($q->td("&nbsp;<br />Predicted RMSD:".$self->help_link("predrmsd")),$q->td("&nbsp;<br />$rmsd"));
-            push @table,$q->Tr($q->td("Predicted Native Overlap (3.5&Aring;):".$self->help_link("predno35")),$q->td(" $no35"));
+            push @table,$q->Tr($q->td("&nbsp;<br />Predicted RMSD:".$self->help_link("predrmsd")),$q->td("&nbsp;<br />$rmsd &Aring;"));
+            push @table,$q->Tr($q->td("Predicted Native Overlap (3.5 &Aring;):".$self->help_link("predno35")),$q->td(" $no35"));
             if (!$featurecount) {
                 push @table,$q->Tr($q->td({-colspan=>"3"},$q->b($line)));
             }
@@ -335,11 +335,11 @@ sub display_ok_job {
                                $q->td(" $value"));
          } elsif ($key eq "SeqIdent") {
             push @table,$q->Tr($q->td("Sequence Identity".$self->help_link("seq_ident")."<br />&nbsp;"),
-                               $q->td(" $value"));
+                               $q->td(" $value %"));
          } elsif ($key eq "Input_SeqIdent") {
             push @table,$q->Tr($q->td("Sequence Identity".$self->help_link("seq_ident")
                                       ."<br />(provided by user)<br />&nbsp;"),
-                               $q->td(" $value"));
+                               $q->td(" $value %"));
          } 
     }
     my $profile="";
