@@ -84,19 +84,21 @@ from the PDB header.
 </p>
 &nbsp;<br>
 <h4>TSVMod</h4>
-<p>TSVMod predicts the RMSD and the Native Overlap (at 3.5&Aring; cutoff) of
+<p>TSVMod predicts the RMSD and the Native Overlap (at 3.5 &Aring; cutoff) of
 a model with its native structure, using a support vector machine (SVM).<br>
 &nbsp;<br>
 <a name=predrmsd><h5>Predicted RMSD</h5></a></p>
 &nbsp;<br>
 <p>
-Predicted RMSD (all C&alpha; atoms)
+The predicted root-mean-squared deviation (RMSD) between the coordinates of
+the C&alpha; atoms in the model and in the native structure.
 </p>
 &nbsp;<br>
 <a name=predno35><h5>Predicted Native Overlap</h5></a>
 &nbsp;<br>
 <p>
-Predicted native overlap (3.5&Aring;)
+Fraction of model C&alpha; atoms that are predicted to be within 3.5 &Aring;
+of their positions in the native structure.
 </p>
 &nbsp;<br>
 <a name=matchtype><h5>Match Type</h5></a>
