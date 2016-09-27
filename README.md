@@ -1,6 +1,5 @@
-[![nightly build](https://salilab.org/nightly/stat/?s=evaluation&t=build)](https://salilab.org/nightly/evaluation/)
-[![python coverage](https://salilab.org/nightly/stat/?s=evaluation&t=python)](https://salilab.org/nightly/evaluation/logs/coverage/python/)
-[![perl coverage](https://salilab.org/nightly/stat/?s=evaluation&t=perl)](https://salilab.org/nightly/evaluation/logs/coverage/perl/)
+[![Build Status](https://travis-ci.org/salilab/evaluation.svg?branch=master)](https://travis-ci.org/salilab/evaluation)
+[![codecov](https://codecov.io/gh/salilab/evaluation/branch/master/graph/badge.svg)](https://codecov.io/gh/salilab/evaluation)
 
 This is the source code for [ModEval](https://salilab.org/evaluation/), a web
 service to evaluate protein structure models. It uses
