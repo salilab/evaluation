@@ -5,7 +5,7 @@ python:
 install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libtest-exception-perl libtest-output-perl libdevel-cover-perl libmime-lite-perl acl cpanminus
-  - pip install coverage
+  - pip install coverage matplotlib
   - sudo cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Codecov
   - git clone --depth=5 https://github.com/salilab/saliweb
   - (cd saliweb && sudo scons modeller_key=UNKNOWN pythondir=$(echo $(dirname $(which python))/../lib/python*/site-packages) perldir=/usr/local/lib/site_perl install)
