@@ -44,7 +44,7 @@ results.
 &nbsp;<br>
 <p>
 To use the evaluation server, input of the MODELLER license key is required. For further
-information, please consult <a href="http://salilab.org/modeller/registration.html">http://salilab.org/modeller/registration.html</a>.
+information, please consult <a href="https://salilab.org/modeller/registration.html">https://salilab.org/modeller/registration.html</a>.
 </p>
 &nbsp;<br>
 <a name=email><h5>Email Address</h5></a>
@@ -63,7 +63,7 @@ Input model file in PDB format (see <a href="http://www.pdb.org">http://www.pdb.
 <a name=alignment_file><h5>Alignment File</h5></a>
 &nbsp;<br>
 <p>
-Optional input alignment file in PIR format (<a href="http://salilab.org/modeller/manual/node445.html">see MODELLER manual</a>). 
+Optional input alignment file in PIR format (<a href="https://salilab.org/modeller/9.17/manual/node496.html">see MODELLER manual</a>). 
 Please note that the second field in line two of the structure entry should
 contain a pdb code (without chain) of a template file currently available in
 the PDB database. 
@@ -172,7 +172,7 @@ number of DOPE restraints acting on each residue.
 &nbsp;<br>
 <p>
 Score for the reliability of a model, derived from statistical potentials
-(<a href="http://salilab.org/pdf/Melo_ProteinSci_2002.pdf">F. Melo,
+(<a href="https://salilab.org/pdf/Melo_ProteinSci_2002.pdf">F. Melo,
 R. Sanchez, A. Sali, 2002</a>). A model is predicted to be reliable when the
 model score is higher than a pre-specified cutoff (0.7). A reliable model has
 a probability of the correct fold that is larger than 95%. A fold is correct
