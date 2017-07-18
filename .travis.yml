@@ -10,7 +10,7 @@ cache:
 install:
   - export PERL5LIB=~/perl5/lib/perl5
   - export PATH=~/perl5/bin:$PATH
-  - pip install coverage matplotlib
+  - pip install coverage matplotlib==1.5.3
   - curl -L https://cpanmin.us/ -o cpanm && chmod a+x cpanm
   - ./cpanm --local-lib=~/perl5 --quiet --notest --skip-satisfied Devel::Cover::Report::Codecov Test::Exception Test::Output Devel::Cover MIME::Lite
   - git clone --depth=5 https://github.com/salilab/saliweb
