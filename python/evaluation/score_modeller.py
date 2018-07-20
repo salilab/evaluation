@@ -91,50 +91,29 @@ def main():
         try:
             (ga341, compactness, e_native_pair, e_native_surf, e_native_comb, \
                     z_pair, z_surf, z_comb) = selected_chain.assess_ga341()
-            print >>fh, "%s SeqIdent %f\n\n%s ZDOPE %f\n\n%s GA341 %f\n%s Z-PAIR %f\n%s Z-SURF %f\n%s Z-COMBI %f\n%s Compactness %f\n" \
-                % (c.name,selected_chain.seq_id,c.name,z_dope_score,c.name,ga341, c.name,z_pair, c.name,z_surf, c.name,z_comb, c.name,compactness)
-            print >>fhxml, "    <modeller_results>\n" \
-                           "        <model>%s</model>\n" \
-                           "        <chain>%s</chain>\n" \
-                           "        <sequence_identity>%f</sequence_identity>\n" \
-                           "        <zdope>%f</zdope>\n" \
-                           "        <ga341>%f</ga341>\n" \
-                           "        <z_pair>%f</z_pair>\n" \
-                           "        <z_surf>%f</z_surf>\n" \
-                           "        <z_comb>%f</z_comb>\n" \
-                           "        <compactness>%f</compactness>\n" \
-                           "    </modeller_results>\n" \
-                           % (opts.model,c.name,selected_chain.seq_id,z_dope_score,ga341,z_pair,z_surf,z_comb,compactness)
-        except:
-            if (opts.seq_ident):
-                selected_chain.seq_id = float(opts.seq_ident)
-                (ga341, compactness, e_native_pair, e_native_surf, e_native_comb, \
-                      z_pair, z_surf, z_comb) = selected_chain.assess_ga341()
-                print >>fh, "%s SeqIdent %f\n\n%s ZDOPE %f\n\n%s GA341 %f\n%s Z-PAIR %f\n%s Z-SURF %f\n%s Z-COMBI %f\n%s Compactness %f\n" \
-                    % (c.name,selected_chain.seq_id,c.name,z_dope_score,c.name,ga341, c.name,z_pair, c.name,z_surf, c.name,z_comb, c.name,compactness)
-                print >>fhxml, "    <modeller_results>\n        <model>%s</model>\n" \
-                               "        <chain>%s</chain>\n" \
-                               "        <sequence_identity>%f</sequence_identity>\n" \
-                               "        <zdope>%f</zdope>\n" \
-                               "        <ga341>%f</ga341>\n" \
-                               "        <z_pair>%f</z_pair>\n" \
-                               "        <z_surf>%f</z_surf>\n" \
-                               "        <z_comb>%f</z_comb>\n" \
-                               "        <compactness>%f</compactness>\n" \
-                               "    </modeller_results>\n" \
-                               % (opts.model,c.name,selected_chain.seq_id,z_dope_score,ga341,z_pair,z_surf,z_comb,compactness)
-            else:
-                pass
-                print >>fh, "%s ZDOPE %f\n" % (c.name,z_dope_score)
-                print >>fhxml, "    <modeller_results>\n" \
-                           "        <model>%s</model>\n" \
-                           "        <chain>%s</chain>\n" \
-                           "        <zdope>%f</zdope>\n" \
-                           "    </modeller_results>\n" \
-                           % (opts.model,c.name,z_dope_score)
+        except ValueError:
+            # Provide sequence identity if GA341 needs it
+            if not opts.seq_ident:
+                continue
+            selected_chain.seq_id = float(opts.seq_ident)
+            (ga341, compactness, e_native_pair, e_native_surf, e_native_comb,
+             z_pair, z_surf, z_comb) = selected_chain.assess_ga341()
+        print >>fh, "%s SeqIdent %f\n\n%s ZDOPE %f\n\n%s GA341 %f\n%s Z-PAIR %f\n%s Z-SURF %f\n%s Z-COMBI %f\n%s Compactness %f\n" \
+            % (c.name,selected_chain.seq_id,c.name,z_dope_score,c.name,ga341, c.name,z_pair, c.name,z_surf, c.name,z_comb, c.name,compactness)
+        print >>fhxml, "    <modeller_results>\n" \
+                       "        <model>%s</model>\n" \
+                       "        <chain>%s</chain>\n" \
+                       "        <sequence_identity>%f</sequence_identity>\n" \
+                       "        <zdope>%f</zdope>\n" \
+                       "        <ga341>%f</ga341>\n" \
+                       "        <z_pair>%f</z_pair>\n" \
+                       "        <z_surf>%f</z_surf>\n" \
+                       "        <z_comb>%f</z_comb>\n" \
+                       "        <compactness>%f</compactness>\n" \
+                       "    </modeller_results>\n" \
+                       % (opts.model,c.name,selected_chain.seq_id,z_dope_score,ga341,z_pair,z_surf,z_comb,compactness)
     fh.close
     fhxml.close
-
 
 
 if __name__ == '__main__':

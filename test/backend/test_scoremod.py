@@ -17,9 +17,13 @@ class DummyChain(object):
 class DummyModel(object):
     def __init__(self):
         self.chains = [DummyChain(x) for x in ['', 'B']]
+        if self.has_seq_id:
+            self.seq_id = 37.0 # Simulate reading seq_id from PDB header
     def assess_normalized_dope(self):
         return -3.0
     def assess_ga341(self):
+        if not hasattr(self, 'seq_id'):
+            raise ValueError("Need to set seq_id")
         return (1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)
 
 class DummyScripts(object):
@@ -97,6 +101,7 @@ class ScoreModellerTests(saliweb.test.TestCase):
         d = saliweb.test.RunInTempDir()
         old_argv = sys.argv
         try:
+            DummyModel.has_seq_id = True
             sys.argv = ['foo', '--model', 'test.pdb', '--seq_ident', '50.0']
             open('input.profile_A', 'w').write('1.0\n2.0\n')
             open('input.profile_B', 'w').write('3.0\n4.0\n')
@@ -105,7 +110,20 @@ class ScoreModellerTests(saliweb.test.TestCase):
             self.assert_in_file('modeller.results', 'Not a valid PDB file')
             self.assert_in_file('modeller.results.xml', 'Not a valid PDB file')
             DummyScripts.error = False
+            # Use seq_id from PDB header
             self.scoremod.main()
+            self.assert_in_file('modeller.results.xml',
+                                '<sequence_identity>37.0')
+            # Use seq_id provided on command line
+            DummyModel.has_seq_id = False
+            self.scoremod.main()
+            self.assert_in_file('modeller.results.xml',
+                                '<sequence_identity>50.0')
+            # No seq_id on command line
+            sys.argv = ['foo', '--model', 'test.pdb']
+            self.scoremod.main()
+            contents = open('modeller.results.xml').read()
+            self.assertEqual(contents, '')
         finally:
             sys.argv = old_argv
 
