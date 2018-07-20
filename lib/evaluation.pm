@@ -43,7 +43,7 @@ sub get_footer {
     my ($self) = @_;
     my $footer="<p>For more information, please consult the following publications:"
               ." <b>TSVMod</b>: D. Eramian, N. Eswar, M.Y. Shen, A. Sali. How well can the accuracy of comparative protein structure models be predicted? Protein Sci 17, 1881-1893, 2008<a href=\"//salilab.org/pdf/Eramian_ProteinSci_2008.pdf\"><img width=\"12px\" src=\"//salilab.org/img/pdf.gif\" border=\"0\" alt=\"PDF\" /></a>. "
-              ."<b>DOPE</b>: M.Y. Shen, A. Sali. Statistical potential for assessment and prediction of protein structures. Protein Sci 15, 2507-2524, 2006<a href=\"//salilab.org/pdf/Colubri_JMolBiol_2006.pdf\"><img width=\"12px\" src=\"//salilab.org/img/pdf.gif\" border=\"0\" alt=\"PDF\" /></a>. "
+              ."<b>DOPE</b>: M.Y. Shen, A. Sali. Statistical potential for assessment and prediction of protein structures. Protein Sci 15, 2507-2524, 2006<a href=\"//salilab.org/pdf/Shen_ProteinSci_2006.pdf\"><img width=\"12px\" src=\"//salilab.org/img/pdf.gif\" border=\"0\" alt=\"PDF\" /></a>. "
               ."<b>GA341</b>: 	F. Melo, R. Sanchez, A. Sali. Statistical potentials for fold assessment. Protein Sci 11, 430-448, 2002<a href=\"//salilab.org/pdf/Melo_ProteinSci_2002.pdf\"><img width=\"12px\" src=\"//salilab.org/img/pdf.gif\" border=\"0\" alt=\"PDF\" /></a></p>. ";
     return "$footer";
 }
