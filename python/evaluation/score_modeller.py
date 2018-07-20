@@ -1,6 +1,7 @@
 from optparse import OptionParser
 import sys
 import os
+import itertools
 
 import matplotlib
 # Force matplotlib (and pylab) to not use any X backend
@@ -63,11 +64,10 @@ def main():
         print >>fh, "Error in Modelfile: Not a valid PDB file\n"
         print >>fhxml, "    <modeller_results>\n        <type>Error in Modelfile: Not a valid PDB file<\type>\n    </modeller_results>\n"
         sys.exit("Error in Modelfile: Not a valid PDB file")
-    i=0
-    colors=["green","red","blue","purple","green","red","blue","purple"]
-    color=colors[i]
 
-    for c in mdl.chains:
+    colors = ["green", "red", "blue", "purple"]
+
+    for c, color in zip(mdl.chains, itertools.cycle(colors)):
         (c.name, len(c.residues))
         selected_chain=complete_pdb(env,opts.model,model_segment=('FIRST:'+c.name,'LAST:'+c.name))
         if not c.name:
@@ -87,13 +87,6 @@ def main():
             pylab.savefig('dope_profile.svg')
         except:
             pass
-        i=i+1
-        try:
-            color=colors[i]
-        except:
-            i=0
-            color=colors[i]
-
 
         try:
             (ga341, compactness, e_native_pair, e_native_surf, e_native_comb, \
