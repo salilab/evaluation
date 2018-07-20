@@ -21,6 +21,20 @@ my $t = new saliweb::Test('evaluation');
          'Queue link');
 }
 
+# Test get_start_html_parameters
+{
+    my $self = $t->make_frontend();
+    my %param = $self->get_start_html_parameters("test");
+    is($param{-style}->{-src}->[-1], "html/modeval.css");
+}
+
+# Test get_page_is_responsive
+{
+    my $self = $t->make_frontend();
+    my $resp = $self->get_page_is_responsive();
+    is($resp, 1);
+}
+
 # Test get_project_menu
 {
     my $self = $t->make_frontend();
@@ -43,4 +57,12 @@ my $t = new saliweb::Test('evaluation');
     my $txt = $self->get_index_page();
     like($txt, qr/evaluation tool for protein structure models/ms,
          'get_index_page');
+}
+
+# Test get_submit_parameter_help
+{
+    my $self = $t->make_frontend();
+    my $help = $self->get_submit_parameter_help();
+    isa_ok($help, 'ARRAY', 'get_submit_parameter_help links');
+    is(scalar(@$help), 5, 'get_submit_parameter_help length');
 }
