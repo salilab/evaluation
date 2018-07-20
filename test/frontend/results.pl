@@ -61,6 +61,45 @@ END
     my $ret = $self->get_results_page($job);
     like($ret, '/Predicted RMSD.*18\.314.*z-DOPE:.*1\.794.*' .
                'DOPE Profile not available/ms', "ok job, no DOPE profile");
+
+    ok(open(FH, "> dope_profile.png"), "open DOPE profile PNG file");
+    print FH "foo";
+    ok(close(FH), "close DOPE profile PNG file");
+    $ret = $self->get_results_page($job);
+    like($ret, '/Predicted RMSD.*18\.314.*z-DOPE:.*1\.794.*' .
+               'dope_profile\.png/ms', "ok job, PNG DOPE profile");
+
+    ok(open(FH, "> dope_profile.svg"), "open DOPE profile SVG file");
+    print FH "foo";
+    ok(close(FH), "close DOPE profile SVG file");
+    $ret = $self->get_results_page($job);
+    like($ret, '/Predicted RMSD.*18\.314.*z-DOPE:.*1\.794.*' .
+               'dope_profile\.svg/ms', "ok job, SVG DOPE profile");
+
+    chdir('/')
+}
+
+# Test display_ok_job with errors
+{
+    my $self = $t->make_frontend();
+    my $tmpdir = tempdir(CLEANUP=>1);
+    ok(chdir($tmpdir), "change to tmpdir");
+    my $job = new saliweb::frontend::CompletedJob($self,
+                        {name=>'testjob', passwd=>'foo', directory=>$tmpdir,
+                         archive_time=>'2009-01-01 08:45:00'});
+    ok(open(FH, "> input.tsvmod.pred"), "open tsvmod file");
+    ok(close(FH), "close tsvmod file");
+    ok(open(FH, "> modeller.results"), "open modeller file");
+    print FH <<END;
+Error error1
+Error error2
+END
+    ok(close(FH), "close modeller file");
+    my $ret = $self->get_results_page($job);
+    like($ret, '/TSVMod failed on input PDB file.*' .
+               'Error error1.*Error error2.*' .
+               'Multiple Errors occurred!/ms', "ok job, errors encountered");
+
     chdir('/')
 }
 
