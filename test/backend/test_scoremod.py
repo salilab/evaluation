@@ -4,7 +4,25 @@ import saliweb.backend
 import sys
 
 class DummyPyLab(object):
-    pass
+    @staticmethod
+    def figure(*args, **keys):
+        pass
+    @staticmethod
+    def xlabel(*args, **keys):
+        pass
+    @staticmethod
+    def ylabel(*args, **keys):
+        pass
+    @staticmethod
+    def plot(*args, **keys):
+        if DummyPyLab.error:
+            raise ValueError("some error in pylab")
+    @staticmethod
+    def legend(*args, **keys):
+        pass
+    @staticmethod
+    def savefig(*args, **keys):
+        pass
 
 class DummyAutoModel(object):
     pass
@@ -101,6 +119,7 @@ class ScoreModellerTests(saliweb.test.TestCase):
         d = saliweb.test.RunInTempDir()
         old_argv = sys.argv
         try:
+            DummyPyLab.error = True
             DummyModel.has_seq_id = True
             sys.argv = ['foo', '--model', 'test.pdb', '--seq_ident', '50.0']
             open('input.profile_A', 'w').write('1.0\n2.0\n')
@@ -116,6 +135,11 @@ class ScoreModellerTests(saliweb.test.TestCase):
                                 '<sequence_identity>37.0')
             # Use seq_id provided on command line
             DummyModel.has_seq_id = False
+            self.scoremod.main()
+            self.assert_in_file('modeller.results.xml',
+                                '<sequence_identity>50.0')
+            # Test with full pylab
+            DummyPyLab.error = False
             self.scoremod.main()
             self.assert_in_file('modeller.results.xml',
                                 '<sequence_identity>50.0')
