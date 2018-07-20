@@ -6,7 +6,7 @@
 <li><a href="#email">Email Address</a></li>
 <li><a href="#model_file">Model File</a></li>
 <li><a href="#alignment_file">Alignment File</a></li>
-<li><a href="#seq_ident">Alignment File</a></li>
+<li><a href="#seq_ident">Sequence Identity</a></li>
 </ul>
 
 <h4>TSVMod</h4>
@@ -80,7 +80,7 @@ is significantly more reliable if:
 <p>
 The calculation of the GA341 score requires the target-template sequence
 identity. For model files produced by MODELLER, this information will be taken
-from the PDB header. 
+from the PDB header, so this field can be left blank.
 </p>
 &nbsp;<br>
 <h4>TSVMod</h4>
