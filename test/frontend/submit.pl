@@ -30,6 +30,8 @@ my $t = new saliweb::Test('evaluation');
               saliweb::frontend::InputValidationError,
               "no key";
 
+    $cgi->param('modkey', get_modeller_key());
+
     $cgi->param('seq_ident', 'garbage');
     throws_ok { $self->get_submit_page() }
               saliweb::frontend::InputValidationError,
@@ -42,7 +44,6 @@ my $t = new saliweb::Test('evaluation');
 
     $cgi->param('model_file', \*FH);
     $cgi->param('job_name', 'test');
-    $cgi->param('modkey', get_modeller_key());
     my $ret = $self->get_submit_page();
     like($ret, '/Your job has been submitted to the server! Your ' .
          'job ID is testjob/ms',
