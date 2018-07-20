@@ -28,13 +28,13 @@ class Job(saliweb.backend.Job):
                     break
                 (key,value)=line.split(":")
                 if key == "SequenceIdentity":
-                    if not value:
+                    if not value.rstrip(' \r\n'):
                         value = 30
                     try:
                         seq_ident=float(value)
                     except ValueError:
                         raise TypeError("Sequence Identity %s contains disallowed characters"
-                                        % (seq_ident))
+                                        % value)
                     if seq_ident < 1.1:
                         seq_ident *= 100.
 

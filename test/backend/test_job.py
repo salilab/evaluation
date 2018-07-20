@@ -31,7 +31,7 @@ class JobTests(saliweb.test.TestCase):
         """Test handling of sequence identity in run method"""
         j = self.make_test_job(evaluation.Job, 'RUNNING')
         d = saliweb.test.RunInDir(j.directory)
-        for seqid, exp_seqid in (('50', '50.0'), ('0.1', '10.0')):
+        for seqid, exp_seqid in (('', '30.0'), ('50', '50.0'), ('0.1', '10.0')):
             f = open('parameters.txt', 'w')
             f.write('Dummy: foo\n')
             f.write('SequenceIdentity: %s\n' % seqid)
