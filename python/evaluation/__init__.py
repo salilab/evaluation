@@ -4,6 +4,26 @@ import sys
 
 class MissingOutputError(Exception): pass
 
+def _read_parameters_file():
+    """Read sequence identity from parameters file and return it"""
+    seq_ident = 0
+    if not os.path.exists("parameters.txt"):
+        return seq_ident
+
+    with open("parameters.txt") as fh:
+        for line in fh:
+            key, value = line.split(":")
+            if key == "SequenceIdentity":
+                if not value.rstrip(' \r\n'):
+                    value = 30
+                try:
+                    seq_ident = float(value)
+                except ValueError:
+                    raise TypeError("Sequence Identity %s contains disallowed "
+                                    "characters" % value)
+                if seq_ident < 1.1:
+                    seq_ident *= 100.
+    return seq_ident
 
 class Job(saliweb.backend.Job):
 
@@ -19,26 +39,7 @@ class Job(saliweb.backend.Job):
             model=" -model input.pdb"
         else:
             model=""
-        seq_ident=0
-        if os.path.exists("parameters.txt"):
-            fh=open("parameters.txt")
-            while 1:
-                line = fh.readline()
-                if not line:
-                    break
-                (key,value)=line.split(":")
-                if key == "SequenceIdentity":
-                    if not value.rstrip(' \r\n'):
-                        value = 30
-                    try:
-                        seq_ident=float(value)
-                    except ValueError:
-                        raise TypeError("Sequence Identity %s contains disallowed characters"
-                                        % value)
-                    if seq_ident < 1.1:
-                        seq_ident *= 100.
-
-            fh.close()
+        seq_ident = _read_parameters_file()
 
         directory=os.getcwd()
         evaluation_script = self.config.evaluation_script \
