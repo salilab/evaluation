@@ -235,9 +235,6 @@ sub display_ok_job {
     push @table,$q->Tr($q->td({-colspan=>"2"},"<h4><br />TSVMod Results</h4>"));
     
     my $tsvmod_file="input.tsvmod.pred";
-    if (!(-e $tsvmod_file)) {
-        $tsvmod_file="input.pred";
-    }
     open ("PRED","$tsvmod_file")
        or throw saliweb::frontend::InternalError("Cannot open TSVMod file: $!");
     # Modelfile|Chain|TSVMod type|Feature Count|Relax Count|Size|Predicted RMSD|Predicted NO35|GA341|Pair|Surf|Comb|z-Dope
@@ -264,38 +261,10 @@ sub display_ok_job {
                
         }
     }
-    if (($tsvmod_ok == 0 ) && ($newformat == 1)) {
+    if ($tsvmod_ok == 0) {
         # job failed
         push @table,$q->Tr($q->td("TSVMod failed on input PDB file".$self->help_link("tsvmod_failed")));
         $error++;
-    }
-    if ($newformat == 0) {
-        open ("PRED","input.pdb.results")
-            or throw saliweb::frontend::InternalError(
-                       "Cannot open input.pdb.results: $!");
-        while (my $line=<PRED>) {
-            (my $key,my $value)=split(/\s+/,$line);
-            unless ($key eq "Input_PDB:") {
-                if ($key eq "Match_Type:") {
-                    push @table,$q->Tr($q->td("Match Type:".$self->help_link("matchtype")),$q->td(" $value"));
-                } elsif ($key eq "Features_Used:") {
-                    push @table,$q->Tr($q->td("Features Used:".$self->help_link("features")),$q->td(" $value"));
-                } elsif ($key eq "Relax_count:") {
-                    push @table,$q->Tr($q->td("Relax Count:".$self->help_link("relaxcount")),$q->td(" $value"));
-                } elsif ($key eq "Set_size:") {
-                    push @table,$q->Tr($q->td("Set Size:".$self->help_link("setsize")),$q->td(" $value"));
-                } elsif ($key eq "Predicted_RMSD:") {
-                    push @table,$q->Tr($q->td("&nbsp;<br />Predicted RMSD:".$self->help_link("predrmsd")),$q->td("&nbsp;<br />$value"));
-                } elsif ($key eq "Pred_NO35:") {
-                    push @table,$q->Tr($q->td("Predicted Native Overlap (3.5&Aring;):".$self->help_link("predno35")),$q->td(" $value"));
-                } elsif ($key eq "input.pdb") {
-                   push @table,$q->Tr($q->td({-colspan=>"3"},$line));
-                } elsif ($key eq "Error") {
-                   push @table,$q->Tr($q->td({-colspan=>"3"},$q->b($line)));
-                }
-
-            }
-        }
     }
     push @table,$q->Tr($q->td({-colspan=>"2"},"<h4><br />Modeller Scoring Results</h4>"));
     open ("PRED","modeller.results")
