@@ -34,7 +34,7 @@ def handle_new_job():
 
     model_file.save(job.get_path('input.pdb'))
     with open(job.get_path('parameters.txt'), 'w') as fh:
-        fh.write("SequenceIdentity\t%d\n" % seq_ident)
+        fh.write("SequenceIdentity:%d\n" % seq_ident)
 
     if alignment_file:
         alignment_file.save(job.get_path('alignment.pir'))
