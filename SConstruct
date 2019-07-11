@@ -9,6 +9,7 @@ env.InstallCGIScripts()
 
 Export('env')
 SConscript('backend/evaluation/SConscript')
+SConscript('frontend/evaluation/SConscript')
 SConscript('html/SConscript')
 SConscript('lib/SConscript')
 SConscript('txt/SConscript')

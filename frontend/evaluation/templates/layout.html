@@ -1,0 +1,39 @@
+{% extends "saliweb/layout.html" %}
+
+{%- block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for("static", filename='modeval.css') }}" />
+{%- endblock %}
+
+{% block navigation %}
+{{ get_navigation_links(
+       [(url_for("index"), "ModEval Home"),
+        (url_for("job"), "Current queue"),
+        (url_for("help"), "Help"),
+        (url_for("contact"), "Contact")])
+}}
+{% endblock %}
+
+{% block sidebar %}
+<p>&nbsp;</p>
+<h4><small>Authors:</small></h4>
+<p>David Eramian<br />
+Min-Yi Shen<br />
+Francisco Melo</p>
+<p>Ursula Pieper<br />
+Ben Webb</p>
+<br />
+<h4><small>Corresponding Author:</small></h4>
+<p>Andrej Sali</p>
+<p><i>Version <a href="https://github.com/salilab/evaluation">{{ config.VERSION }}</a></i></p>
+{% endblock %}
+
+{% block footer %}
+<p>For more information, please consult the following publications:
+<b>TSVMod</b>: D. Eramian, N. Eswar, M.Y. Shen, A. Sali. How well can the
+accuracy of comparative protein structure models be predicted?
+Protein Sci 17, 1881-1893, 2008<a href="//salilab.org/pdf/Eramian_ProteinSci_2008.pdf"><img width="12px" src="//salilab.org/img/pdf.gif" border="0" alt="PDF" /></a>.
+<b>DOPE</b>: M.Y. Shen, A. Sali. Statistical potential for assessment and
+prediction of protein structures. Protein Sci 15, 2507-2524, 2006<a href="//salilab.org/pdf/Shen_ProteinSci_2006.pdf"><img width="12px" src="//salilab.org/img/pdf.gif" border="0" alt="PDF" /></a>.
+<b>GA341</b>: 	F. Melo, R. Sanchez, A. Sali. Statistical potentials for
+fold assessment. Protein Sci 11, 430-448, 2002<a href="//salilab.org/pdf/Melo_ProteinSci_2002.pdf"><img width="12px" src="//salilab.org/img/pdf.gif" border="0" alt="PDF" /></a></p>
+{% endblock %}

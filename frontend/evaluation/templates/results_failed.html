@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block title %}SaliLab Model Evaluation Server Results{% endblock %}
+
+{% block body %}
+<p>Your ModEval job '<b>{{ job.name }}</b>' failed to produce results.</p>
+
+<p>For a discussion of some common input errors, please see the
+<a href="{{ url_for("help", _anchor="errors") }}">help page</a>.</p>
+{% endblock %}
