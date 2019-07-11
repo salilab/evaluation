@@ -1,6 +1,7 @@
 from flask import render_template, request, send_from_directory, abort
 import saliweb.frontend
 from saliweb.frontend import get_completed_job, Parameter, FileParameter
+from . import submit
 
 
 parameters=[Parameter("name", "Job name", optional=True),
@@ -34,7 +35,7 @@ def job():
     if request.method == 'GET':
         return saliweb.frontend.render_queue_page()
     else:
-        pass  # todo
+        return submit.handle_new_job()
 
 
 @app.route('/results.cgi/<name>')  # compatibility with old perl-CGI scripts
