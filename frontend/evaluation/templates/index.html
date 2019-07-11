@@ -24,7 +24,7 @@
     </tr>
     <tr>
       <td>Email Address (optional) {{ help_link("email") }}</td>
-      <td><input type="text" name="email" size="20" maxlength="200" class="wide" /></td>
+      <td><input type="text" name="email" value="{{ g.user.email }}" size="20" maxlength="200" class="wide" /></td>
     </tr>
     <tr>
       <td>Upload Model File (PDB Format) {{ help_link("model_file") }}</td>
