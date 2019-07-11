@@ -65,11 +65,11 @@ class Tests(saliweb.test.TestCase):
         data={'modkey': saliweb.test.get_modeller_key(),
               'model_file': open(pdbf),
               'alignment_file': open(alf),
-              'job_name': 'test',
+              'name': 'testjob',
               'email': 'test@test.com'}
         rv = c.post('/job', data=data)
         self.assertEqual(rv.status_code, 200)
-        r = re.compile('Your job has been submitted to the server! '
+        r = re.compile('Your job has been submitted to the server!.*'
                        'Your job ID is testjob.*'
                        'notified at test@test.com when job results '
                        'are available',
