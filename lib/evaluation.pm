@@ -81,7 +81,7 @@ sub get_index_page {
                                           -class=>"wide"}))),
                 $q->Tr(
                     $q->td("Email Address (optional)",$self->help_link("email")),
-                    $q->td($q->textfield({-name=>"email",-size=>"20",-maxlength=>"200",-class=>"wide"}))),
+                    $q->td($q->textfield({-name=>"email",-value=>$self->email,-size=>"20",-maxlength=>"200",-class=>"wide"}))),
                 $q->Tr(     
                     $q->td("Upload Model File (PDB Format)",$self->help_link("model_file")),
                     $q->td($q->filefield({-name=>"model_file",-size=>"20",-maxlength=>"200"}))),

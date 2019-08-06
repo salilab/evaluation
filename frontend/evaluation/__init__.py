@@ -1,12 +1,13 @@
 from flask import render_template, request, send_from_directory, abort
 import saliweb.frontend
 from saliweb.frontend import get_completed_job, Parameter, FileParameter
-from . import submit
+import os
+from . import submit, results_page
 
 
 parameters=[Parameter("name", "Job name", optional=True),
             Parameter("modkey", "MODELLER license key"),
-            FileParameter("model_file",
+            FileParameter("pdb_file",
                           "PDB file containing model to be evaluated"),
             FileParameter("alignment_file", "Alignment file in PIR format",
                           optional=True),
@@ -44,7 +45,7 @@ def results(name):
     job = get_completed_job(name, request.args.get('passwd'))
     if any(os.path.exists(job.get_path(p))
            for p in ('input.tsvmod.pred', 'input.pred', 'input.pdb.results')):
-        pass  # todo
+        return results_page.show_results_page(job)
     else:
         return saliweb.frontend.render_results_template("results_failed.html",
                                                         job=job)

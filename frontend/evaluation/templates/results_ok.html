@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block title %}SaliLab Model Evaluation Server Results{% endblock %}
+
+{% block body %}
+<p>Job '<b>{{ job.name }}</b>' has completed.</p>
+
+<table width="100%">
+  <tr>
+    <td colspan="2"><h4><br />TSVMod Results</h4></td>
+  </tr>
+
+  {%- for r in tsvmod_results %}
+    {%- if r.error %}
+    <tr><td colspan="3"><b>{{ r.error }}</b></td></tr>
+    {%- else %}
+    <tr><th colspan="2">Chain {{ 'A' if r.chain == '_' else r.chain }}</th></tr>
+    <tr>
+      <td style="width:20em">Match Type: {{ help_link("matchtype") }}</td>
+      <td>{{ r.matchtype }}</td>
+    </tr>
+    <tr>
+      <td>Features Used: {{ help_link("features") }}</td>
+      <td>{{ r.featurecount }}</td>
+    </tr>
+    <tr>
+      <td>Relax Count: {{ help_link("relaxcount") }}</td>
+      <td>{{ r.relaxcount }}</td>
+    </tr>
+    <tr>
+      <td>Set Size: {{ help_link("setsize") }}</td>
+      <td>{{ r.size }}</td>
+    </tr>
+    <tr>
+      <td>&nbsp;<br />Predicted RMSD: {{ help_link("predrmsd") }}</td>
+      <td>&nbsp;<br />{{ r.rmsd }} &Aring;</td>
+    </tr>
+    <tr>
+      <td>Predicted Native Overlap (3.5 &Aring;): {{ help_link("predno35") }}</td>
+      <td>{{ r.no35 }}</td>
+    </tr>
+  {%- endif %}
+
+  {%- else %}
+  <tr>
+    <td>TSVMod failed on input PDB file {{ help_link("tsvmod_failed") }}</td>
+  </tr>
+  {%- endfor %}
+
+  <tr>
+    <td colspan="2"><h4><br />Modeller Scoring Results</h4></td>
+  </tr>
+
+  {%- for r in modeller_results %}
+    {%- if r.error %}
+    <tr><td colspan="3"><b>{{ r.error }}</b></td></tr>
+    {%- else %}
+    <tr><th colspan="2">Chain {{ r.chain }}</th></tr>
+    <tr>
+      <td>Sequence Identity: {{ help_link("seq_ident") }}</td>
+      <td>{{ "%.3f" | format(r.seqid) }}</td>
+    </tr>
+    <tr>
+      <td>z-DOPE: {{ help_link("z-dope") }}</td>
+      <td>{{ "%.3f" | format(r.zdope) }}</td>
+    </tr>
+    <tr>
+      <td>GA341: {{ help_link("ga341") }}</td>
+      <td>{{ "%.3f" | format(r.ga341) }}</td>
+    </tr>
+    <tr>
+      <td>z-pair: {{ help_link("z-pair") }}</td>
+      <td>{{ "%.3f" | format(r.zpair) }}</td>
+    </tr>
+    <tr>
+      <td>z-surf: {{ help_link("z-surf") }}</td>
+      <td>{{ "%.3f" | format(r.zsurf) }}</td>
+    </tr>
+    <tr>
+      <td>z-combi: {{ help_link("z-combi") }}</td>
+      <td>{{ "%.3f" | format(r.zcombi) }}</td>
+    </tr>
+    {%- endif %}
+  {%- endfor %}
+</table>
+
+{% endblock %}

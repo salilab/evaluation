@@ -2,10 +2,6 @@
 
 {% block title %}SaliLab Model Evaluation Server{% endblock %}
 
-{%- macro help_link(anchor) -%}
-<a class="helplink" href="{{ url_for("help", _anchor=anchor) }}"><img class="helplink" src="/saliweb/img/help.jpg" alt="help" /></a>
-{%- endmacro %}
-
 {% block body %}
 <h3>ModEval Model Evaluation Server</h3>
 
@@ -20,15 +16,15 @@
     </tr>
     <tr>
       <td>Modeller Key {{ help_link("modkey") }}</td>
-      <td><input type="text" name="modkey" size="20" maxlength="200" class="wide" /></td>
+      <td><input type="text" name="modkey" value="{{ g.user.modeller_key }}" size="20" maxlength="200" class="wide" /></td>
     </tr>
     <tr>
       <td>Email Address (optional) {{ help_link("email") }}</td>
       <td><input type="text" name="email" value="{{ g.user.email }}" size="20" maxlength="200" class="wide" /></td>
     </tr>
     <tr>
-      <td>Upload Model File (PDB Format) {{ help_link("model_file") }}</td>
-      <td><input type="file" name="model_file" size="20" maxlength="200" /></td>
+      <td>Upload Model File (PDB Format) {{ help_link("pdb_file") }}</td>
+      <td><input type="file" name="pdb_file" size="20" maxlength="200" /></td>
     </tr>
     <tr>
       <td>Upload Alignment File (PIR Format, recommended) {{ help_link("alignment_file") }}</td>

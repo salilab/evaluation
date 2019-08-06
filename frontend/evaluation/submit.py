@@ -1,10 +1,18 @@
 from flask import request
 import saliweb.frontend
 from werkzeug.utils import secure_filename
+import werkzeug.datastructures
 
 
 def handle_new_job():
     model_file = request.files.get("model_file")
+    # Assume a request using the old name for PDB file is using the old REST
+    # API, so force XML output
+    if model_file:
+        request.accept_mimetypes = werkzeug.datastructures.MIMEAccept(
+            [('application/xml', 1.0)])
+    else:
+        model_file = request.files.get("pdb_file")
     alignment_file = request.files.get("alignment_file")
     job_name = request.form.get("name")
     email = request.form.get("email")

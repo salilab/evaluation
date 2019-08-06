@@ -31,7 +31,7 @@ class Tests(saliweb.test.TestCase):
                      "ATOM      2  CA  ALA     1      26.711  14.576   5.091\n")
 
         # Successful submission (no email)
-        data['model_file'] = open(pdbf)
+        data['pdb_file'] = open(pdbf)
         rv = c.post('/job', data=data)
         self.assertEqual(rv.status_code, 200)
         r = re.compile('Your job has been submitted.*You can check on your job',
@@ -40,7 +40,7 @@ class Tests(saliweb.test.TestCase):
 
         # Successful submission (with email)
         data['email'] = 'test@test.com'
-        data['model_file'] = open(pdbf)
+        data['pdb_file'] = open(pdbf)
         rv = c.post('/job', data=data)
         self.assertEqual(rv.status_code, 200)
         r = re.compile('Your job has been submitted.*You will be notified.*'
@@ -63,7 +63,7 @@ class Tests(saliweb.test.TestCase):
             fh.write("\n")
 
         data={'modkey': saliweb.test.get_modeller_key(),
-              'model_file': open(pdbf),
+              'pdb_file': open(pdbf),
               'alignment_file': open(alf),
               'name': 'testjob',
               'email': 'test@test.com'}
