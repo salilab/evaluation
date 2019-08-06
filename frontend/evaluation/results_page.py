@@ -10,7 +10,7 @@ TSVModResult = collections.namedtuple('TSVModResult',
 
 ModellerResult = collections.namedtuple('ModellerResult',
     ('chain', 'zdope', 'ga341', 'zpair', 'zsurf', 'zcombi', 'seqid',
-     'input_seqid', 'compactness'))
+     'compactness'))
 
 
 class ResultError(object):
@@ -45,7 +45,7 @@ def parse_modeller(job, errors):
     current_fields = dict.fromkeys(ModellerResult._fields)
     field_map = {'ZDOPE': 'zdope', 'GA341': 'ga341', 'Z-PAIR': 'zpair',
                  'Z-SURF': 'zsurf', 'Z-COMBI': 'zcombi', 'SeqIdent': 'seqid',
-                 'Input_SeqIdent': 'input_seqid', 'Compactness': 'compactness'}
+                 'Compactness': 'compactness'}
     blank_line = re.compile('\s*$')
     def update_chain(chain):
         if chain != current_chain and current_chain is not None:
