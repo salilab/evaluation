@@ -82,6 +82,25 @@
     </tr>
     {%- endif %}
   {%- endfor %}
+
+  {%- if dope_profile %}
+  <tr>
+    <td colspan="2"><h4><br />DOPE Profile {{ help_link("dope_profile") }}</h4></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src={{ job.get_results_file_url(dope_profile) }} class="big" alt="DOPE profile" /></td>
+  </tr>
+  {%- else %}
+  <tr>
+    <p><br />DOPE Profile not available {{ help_link("dope_profile") }}</p>
+  </tr>
+  {%- endif %}
+
+  {%- if errors|length >= 3 %}
+  <tr>
+    <td colspan="2"><p><font color="red">Multiple Errors occurred! Please check your input PDB file.</font></p></td>
+  </tr>
+  {%- endif %}
 </table>
 
 {{ job.get_results_available_time() }}

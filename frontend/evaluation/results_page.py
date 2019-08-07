@@ -1,6 +1,7 @@
 import saliweb.frontend
 import collections
 import re
+import os
 
 
 TSVModResult = collections.namedtuple('TSVModResult',
@@ -22,7 +23,15 @@ def show_results_page(job):
     return saliweb.frontend.render_results_template("results_ok.html",
         extra_xml_outputs=['evaluation.xml'],
         tsvmod_results=list(tsvmod_results),
-        modeller_results=modeller_results, job=job, errors=errors)
+        modeller_results=parse_modeller(job, errors),
+        dope_profile=get_dope_profile(job, errors), job=job, errors=errors)
+
+
+def get_dope_profile(job, errors):
+    for p in 'dope_profile.svg', 'dope_profile.png':
+        if os.path.exists(job.get_path(p)):
+            return p
+    errors.append('DOPE')
 
 
 def parse_tsvmod(job, errors):
