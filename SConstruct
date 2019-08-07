@@ -5,12 +5,9 @@ env = saliweb.build.Environment(vars, ['conf/live.conf'], service_module='evalua
 Help(vars.GenerateHelpText(env))
 
 env.InstallAdminTools()
-env.InstallCGIScripts()
 
 Export('env')
 SConscript('backend/evaluation/SConscript')
 SConscript('frontend/evaluation/SConscript')
 SConscript('html/SConscript')
-SConscript('lib/SConscript')
-SConscript('txt/SConscript')
 SConscript('test/SConscript')
