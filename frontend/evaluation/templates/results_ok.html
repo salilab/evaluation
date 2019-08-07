@@ -58,7 +58,7 @@
     <tr><th colspan="2">Chain {{ r.chain }}</th></tr>
     <tr>
       <td>Sequence Identity: {{ help_link("seq_ident") }}</td>
-      <td>{{ "%.3f" | format(r.seqid) }}</td>
+      <td>{{ "%.3f" | format(r.seqident) }} %</td>
     </tr>
     <tr>
       <td>z-DOPE: {{ help_link("z-dope") }}</td>
@@ -83,5 +83,7 @@
     {%- endif %}
   {%- endfor %}
 </table>
+
+{{ job.get_results_available_time() }}
 
 {% endblock %}
