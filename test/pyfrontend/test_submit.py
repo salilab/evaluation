@@ -76,6 +76,25 @@ class Tests(saliweb.test.TestCase):
                        re.MULTILINE | re.DOTALL)
         self.assertRegexpMatches(rv.data, r)
 
+    def test_submit_page_xml(self):
+        """Test submit page with XML output forced"""
+        incoming = saliweb.test.TempDir()
+        evaluation.app.config['DIRECTORIES_INCOMING'] = incoming.tmpdir
+        c = evaluation.app.test_client()
+
+        t = saliweb.test.TempDir()
+        pdbf = os.path.join(t.tmpdir, 'test.pdb')
+        with open(pdbf, 'w') as fh:
+            fh.write("REMARK\n"
+                     "ATOM      2  CA  ALA     1      26.711  14.576   5.091\n")
+
+        modkey = saliweb.test.get_modeller_key()
+        rv = c.post('/job', data={'modkey': modkey, 'model_file': open(pdbf)})
+        self.assertEqual(rv.status_code, 200)
+        r = re.compile('<\?xml.*<job xlink:href=.*&amp;force_xml=1',
+                       re.MULTILINE | re.DOTALL)
+        self.assertRegexpMatches(rv.data, r)
+
     def test_handle_seq_ident(self):
         """Test handle_seq_ident()"""
         # Default value
