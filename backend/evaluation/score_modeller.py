@@ -62,7 +62,10 @@ def main():
         mdl=complete_pdb(env,opts.model, transfer_res_num=True)
     except:
         print >>fh, "Error in Modelfile: Not a valid PDB file\n"
-        print >>fhxml, "    <modeller_results>\n        <type>Error in Modelfile: Not a valid PDB file<\type>\n    </modeller_results>\n"
+        print >>fhxml, \
+            "    <modeller_results>\n" \
+            "        <type>Error in Modelfile: Not a valid PDB file</type>\n" \
+            "    </modeller_results>"
         sys.exit("Error in Modelfile: Not a valid PDB file")
 
     colors = ["green", "red", "blue", "purple"]

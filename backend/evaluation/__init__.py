@@ -58,6 +58,7 @@ class Job(saliweb.backend.Job):
         print >>fh, "python " + self.config.modeller_script \
                     + " --model input.pdb " + seq_ident + ">&modeller.log"
         print >>fh, "echo \"<evaluation>\" >evaluation.txt\n"
+        print >>fh, "rm -f evaluation.xml\n"
         print >>fh, "cat *.xml >>evaluation.txt\n"
         print >>fh, "echo \"</evaluation>\" >>evaluation.txt\n"
         print >>fh, "mv evaluation.txt evaluation.xml\n"
