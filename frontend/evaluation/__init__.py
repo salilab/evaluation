@@ -1,4 +1,5 @@
 from flask import render_template, request, send_from_directory, abort
+import werkzeug.datastructures
 import saliweb.frontend
 from saliweb.frontend import get_completed_job, Parameter, FileParameter
 import os
@@ -42,6 +43,11 @@ def job():
 @app.route('/results.cgi/<name>')  # compatibility with old perl-CGI scripts
 @app.route('/job/<name>')
 def results(name):
+    # Simulate setting the HTTP Accept header if force_xml=True (for
+    # backwards compatibility)
+    if request.args.get('force_xml'):
+        request.accept_mimetypes = werkzeug.datastructures.MIMEAccept(
+            [('application/xml', 1.0)])
     job = get_completed_job(name, request.args.get('passwd'))
     if any(os.path.exists(job.get_path(p))
            for p in ('input.tsvmod.pred', 'input.pred', 'input.pdb.results')):

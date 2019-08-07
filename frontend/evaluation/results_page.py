@@ -23,6 +23,7 @@ def show_results_page(job):
     tsvmod_results = parse_tsvmod(job, errors)
     modeller_results = parse_modeller(job, errors)
     return saliweb.frontend.render_results_template("results_ok.html",
+        extra_xml_outputs=['evaluation.xml'],
         tsvmod_results=list(tsvmod_results),
         modeller_results=list(modeller_results), job=job, errors=errors)
 

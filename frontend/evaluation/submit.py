@@ -5,10 +5,12 @@ import werkzeug.datastructures
 
 
 def handle_new_job():
+    force_results_xml = False
     model_file = request.files.get("model_file")
     # Assume a request using the old name for PDB file is using the old REST
-    # API, so force XML output
+    # API, so force XML output of both this and the results page
     if model_file:
+        force_results_xml = True
         request.accept_mimetypes = werkzeug.datastructures.MIMEAccept(
             [('application/xml', 1.0)])
     else:
@@ -47,7 +49,7 @@ def handle_new_job():
     if alignment_file:
         alignment_file.save(job.get_path('alignment.pir'))
 
-    job.submit(email)
+    job.submit(email, force_results_xml=force_results_xml)
     return saliweb.frontend.render_submit_template(
         'submit.html', email=email, job=job)
 
