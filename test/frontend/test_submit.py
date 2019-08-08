@@ -32,19 +32,19 @@ class Tests(saliweb.test.TestCase):
 
         # Successful submission (no email)
         data['pdb_file'] = open(pdbf)
-        rv = c.post('/job', data=data)
-        self.assertEqual(rv.status_code, 200)
-        r = re.compile('Your job has been submitted.*You can check on your job',
+        rv = c.post('/job', data=data, follow_redirects=True)
+        self.assertEqual(rv.status_code, 503)  # job not finished yet
+        r = re.compile('Your job has been submitted.*You can check on',
                        re.MULTILINE | re.DOTALL)
         self.assertRegexpMatches(rv.data, r)
 
         # Successful submission (with email)
         data['email'] = 'test@test.com'
         data['pdb_file'] = open(pdbf)
-        rv = c.post('/job', data=data)
-        self.assertEqual(rv.status_code, 200)
+        rv = c.post('/job', data=data, follow_redirects=True)
+        self.assertEqual(rv.status_code, 503)  # job not finished yet
         r = re.compile('Your job has been submitted.*You will be notified.*'
-                       'You can check on your job', re.MULTILINE | re.DOTALL)
+                       'You can check on', re.MULTILINE | re.DOTALL)
         self.assertRegexpMatches(rv.data, r)
 
     def test_submit_page_alignment(self):
@@ -67,8 +67,8 @@ class Tests(saliweb.test.TestCase):
               'alignment_file': open(alf),
               'name': 'testjob',
               'email': 'test@test.com'}
-        rv = c.post('/job', data=data)
-        self.assertEqual(rv.status_code, 200)
+        rv = c.post('/job', data=data, follow_redirects=True)
+        self.assertEqual(rv.status_code, 503)  # job not finished yet
         r = re.compile('Your job has been submitted to the server!.*'
                        'Your job ID is testjob.*'
                        'notified at test@test.com when job results '

@@ -8,13 +8,15 @@
 <p>Your job has been submitted to the server!
 Your job ID is {{ job.name }}.</p>
 
-<p>Results will be found at <a href="{{ job.results_url }}">{{ job.results_url }}</a>.</p>
+<p>The job is currently running. When it is complete, results will be found
+here - simply refresh or bookmark this page.</p>
 
-{%- if email %}
-<p>You will be notified at {{ email }} when job results are available.</p>
+{%- if job.email %}
+<p>You will be notified at {{ job.email }} when job results are available.</p>
 {%- endif %}
 
-<p>You can check on your job at the <a href="{{ url_for("job") }}">queue status page</a>.</p>
+<p>You can check on the status of all jobs at the
+<a href="{{ url_for("job") }}">queue page</a>.</p>
 
 <p>The estimated execution time per request is ~1 min, depending on the
 server load.</p>

@@ -48,7 +48,8 @@ def results(name):
     if request.args.get('force_xml'):
         request.accept_mimetypes = werkzeug.datastructures.MIMEAccept(
             [('application/xml', 1.0)])
-    job = get_completed_job(name, request.args.get('passwd'))
+    job = get_completed_job(name, request.args.get('passwd'),
+                            still_running_template='running.html')
     if any(os.path.exists(job.get_path(p))
            for p in ('input.tsvmod.pred', 'input.pred', 'input.pdb.results')):
         return results_page.show_results_page(job)

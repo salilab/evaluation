@@ -50,8 +50,7 @@ def handle_new_job():
         alignment_file.save(job.get_path('alignment.pir'))
 
     job.submit(email, force_results_xml=force_results_xml)
-    return saliweb.frontend.render_submit_template(
-        'submit.html', email=email, job=job)
+    return saliweb.frontend.redirect_to_results_page(job)
 
 
 def handle_seq_ident(seq_ident):
