@@ -62,7 +62,7 @@ class Job(saliweb.backend.Job):
         print >>fh, "cat *.xml >>evaluation.txt\n"
         print >>fh, "echo \"</evaluation>\" >>evaluation.txt\n"
         print >>fh, "mv evaluation.txt evaluation.xml\n"
-        print >>fh,"sleep 10s"
+        print >>fh,"sleep 2s"
         print >>fh,"echo DONE >job-state"
         fh.close()
         r = self.runnercls("cd "+directory+"; chmod +x "+script+";./"+script)
