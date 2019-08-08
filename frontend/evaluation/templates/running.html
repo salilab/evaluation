@@ -2,6 +2,10 @@
 
 {% block title %}ModEval Job Submission{% endblock %}
 
+{% block meta %}
+<meta http-equiv="refresh" content="{{ job.get_refresh_time(5) }}" />
+{% endblock %}
+
 {% block body %}
 <h1>Job Submitted</h1>
 
