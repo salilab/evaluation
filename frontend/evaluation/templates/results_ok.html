@@ -90,6 +90,13 @@
   <tr>
     <td colspan="2"><img src={{ job.get_results_file_url(dope_profile) }} class="big" alt="DOPE profile" /></td>
   </tr>
+
+  <tr><td colspan="2">Download raw DOPE profile files:
+  {%- for p in dope_profile_files %}
+    <a href="{{ job.get_results_file_url(p.fname) }}">chain {{ p.chain }}</a>
+    {%- if not loop.last -%}; {%- endif -%}
+  {%- endfor %}
+  </td></tr>
   {%- else %}
   <tr>
     <td><br />DOPE Profile not available {{ help_link("dope_profile") }}</td>

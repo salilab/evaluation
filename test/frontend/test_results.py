@@ -43,6 +43,7 @@ A Z-SURF -3.749842
 A Z-COMBI -6.870231
 A Compactness 0.145962
 """)
+            j.make_file("input.profile_A", "")
             c = evaluation.app.test_client()
 
             # Test with no DOPE profile
@@ -64,7 +65,9 @@ A Compactness 0.145962
             j.make_file("dope_profile.svg")
             rv = c.get('/job/testjob2?passwd=%s' % j.passwd)
             r = re.compile('Predicted RMSD.*18\.314.*z-DOPE:.*1\.794.*'
-                           'dope_profile\.svg',
+                           'dope_profile\.svg.*'
+                           'Download raw profile files:.*'
+                           'input\.profile_A.*chain A',
                            re.MULTILINE | re.DOTALL)
             self.assertRegexpMatches(rv.data, r)
 

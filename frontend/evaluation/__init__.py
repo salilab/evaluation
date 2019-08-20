@@ -62,7 +62,7 @@ def results(name):
 def results_file(name, fp):
     job = get_completed_job(name, request.args.get('passwd'))
     if (fp in ("evaluation.xml", "dope_profile.A.png", "modeller.log")
-        or "dope_profile" in fp):
+        or "dope_profile" in fp or "input.profile" in fp):
         return send_from_directory(job.directory, fp)
     else:
         abort(404)

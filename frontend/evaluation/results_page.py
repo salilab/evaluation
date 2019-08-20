@@ -2,12 +2,16 @@ import saliweb.frontend
 import collections
 import re
 import os
+import glob
 
 
 TSVModResult = collections.namedtuple('TSVModResult',
     ('modelfile', 'chain', 'matchtype', 'featurecount', 'relaxcount', 'size',
      'rmsd', 'no35', 'ga341', 'ga341_pair', 'ga341_surf', 'ga341_comb',
      'zdope'))
+
+
+DOPEProfileFile = collections.namedtuple('DOPEProfileFile', ('fname', 'chain'))
 
 
 class ResultError(object):
@@ -24,7 +28,9 @@ def show_results_page(job):
         extra_xml_outputs=['evaluation.xml'],
         tsvmod_results=list(tsvmod_results),
         modeller_results=parse_modeller(job, errors),
-        dope_profile=get_dope_profile(job, errors), job=job, errors=errors)
+        dope_profile=get_dope_profile(job, errors),
+        dope_profile_files=list(get_dope_profile_files(job)),
+        job=job, errors=errors)
 
 
 def get_dope_profile(job, errors):
@@ -32,6 +38,13 @@ def get_dope_profile(job, errors):
         if os.path.exists(job.get_path(p)):
             return p
     errors.append('DOPE')
+
+
+def get_dope_profile_files(job):
+    for g in sorted(glob.glob(job.get_path('input.profile_*'))):
+        fname = os.path.basename(g)
+        chain = fname.split('_')[1]
+        yield DOPEProfileFile(fname=fname, chain=chain)
 
 
 def parse_tsvmod(job, errors):
