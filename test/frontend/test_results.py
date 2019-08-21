@@ -66,7 +66,7 @@ A Compactness 0.145962
             rv = c.get('/job/testjob2?passwd=%s' % j.passwd)
             r = re.compile('Predicted RMSD.*18\.314.*z-DOPE:.*1\.794.*'
                            'dope_profile\.svg.*'
-                           'Download raw profile files:.*'
+                           'Download raw DOPE profile files:.*'
                            'input\.profile_A.*chain A',
                            re.MULTILINE | re.DOTALL)
             self.assertRegexpMatches(rv.data, r)
