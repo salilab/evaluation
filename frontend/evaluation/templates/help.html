@@ -35,80 +35,78 @@
 </ul>
 
 
-&nbsp;<br>
+&nbsp;<br />
 <h4>General</h4>
-&nbsp;<br>
-<a name=jobname><h5>Job Name</h5></a>
-&nbsp;<br>
+&nbsp;<br />
+<h5><a name="jobname"></a>Job Name</h5>
+&nbsp;<br />
 <p>
 The Job Name is used to identify the status in the queue and to display the
 results. 
 </p>
-&nbsp;<br>
-<a name=modkey><h5>Modeller Key</h5></a>
-&nbsp;<br>
+&nbsp;<br />
+<h5><a name="modkey"></a>Modeller Key</h5>
+&nbsp;<br />
 <p>
 To use the evaluation server, input of the MODELLER license key is required. For further
 information, please consult <a href="https://salilab.org/modeller/registration.html">https://salilab.org/modeller/registration.html</a>.
 </p>
-&nbsp;<br>
-<a name=email><h5>Email Address</h5></a>
-&nbsp;<br>
+&nbsp;<br />
+<h5><a name="email"></a>Email Address</h5>
+&nbsp;<br />
 <p>
 An email will be sent to the input email address, once the calculations are
 finished.
 </p>
-&nbsp;<br>
-<a name=pdb_file><h5>Model File</h5></a>
-&nbsp;<br>
+&nbsp;<br />
+<h5><a name="pdb_file"></a>Model File</h5>
+&nbsp;<br />
 <p>
 Input model file in PDB format (see <a href="http://www.pdb.org">http://www.pdb.org</a>)
 </p>
-&nbsp;<br>
-<a name=alignment_file><h5>Alignment File</h5></a>
-&nbsp;<br>
+&nbsp;<br />
+<h5><a name="alignment_file"></a>Alignment File</h5>
+&nbsp;<br />
 <p>
 Optional input alignment file in PIR format (<a href="https://salilab.org/modeller/9.17/manual/node496.html">see MODELLER manual</a>). 
 Please note that the second field in line two of the structure entry should
 contain a pdb code (without chain) of a template file currently available in
 the PDB database. 
-<br><br>The TSVMod score
-is significantly more reliable if:
+<br /><br />The TSVMod score
+is significantly more reliable if:</p>
 <ul>
 <li>TSVMod receives a model and an alignment file</li>
-<li>The template PDB code or a closely related template can be found in the TSVMod training set
+<li>The template PDB code or a closely related template can be found in the TSVMod training set</li>
 </ul>
-</p>
-&nbsp;<br>
-<a name=seq_ident><h5>Sequence Identity</h5></a>
-&nbsp;<br>
+&nbsp;<br />
+<h5><a name="seq_ident"></a>Sequence Identity</h5>
+&nbsp;<br />
 <p>
 The calculation of the GA341 score requires the target-template sequence
 identity. For model files produced by MODELLER, this information will be taken
 from the PDB header, so this field can be left blank.
 </p>
-&nbsp;<br>
+&nbsp;<br />
 <h4>TSVMod</h4>
 <p>TSVMod predicts the RMSD and the Native Overlap (at 3.5 &Aring; cutoff) of
-a model with its native structure, using a support vector machine (SVM).<br>
-&nbsp;<br>
-<a name=predrmsd><h5>Predicted RMSD</h5></a></p>
-&nbsp;<br>
+a model with its native structure, using a support vector machine (SVM).<br />
+&nbsp;<br /></p>
+<h5><a name="predrmsd"></a>Predicted RMSD</h5>
+&nbsp;<br />
 <p>
 The predicted root-mean-squared deviation (RMSD) between the coordinates of
 the C&alpha; atoms in the model and in the native structure.
 </p>
-&nbsp;<br>
-<a name=predno35><h5>Predicted Native Overlap</h5></a>
-&nbsp;<br>
+&nbsp;<br />
+<h5><a name="predno35"></a>Predicted Native Overlap</h5>
+&nbsp;<br />
 <p>
 Fraction of model C&alpha; atoms that are predicted to be within 3.5 &Aring;
 of their positions in the native structure.
 </p>
-&nbsp;<br>
-<a name=matchtype><h5>Match Type</h5></a>
-&nbsp;<br>
-<p>
+&nbsp;<br />
+<h5><a name="matchtype"></a>Match Type</h5>
+&nbsp;<br />
 <ul>
 <li>MatchByTemplate: Training set is based on the template structure, or a closely
 related template structure (95% sequence identity). This match type returns
@@ -123,35 +121,32 @@ with similar features is used instead. Without an alignment file, only a
 reduced set of features is used in the SVM, resulting in the least reliable
 prediction. </li>
 </ul>
-</p>
-&nbsp;<br>
-<a name=features><h5>Features</h5></a>
-&nbsp;<br>
-<p>
+&nbsp;<br />
+<h5><a name="features"></a>Features</h5>
+&nbsp;<br />
 <ul>
 <li>All: all available z-scores are used in the SVM </li>
 <li>Reduced: for lack of sufficiently similar structures in the training set, a reduced set of
 z-scores is used to compute the results.</li>
 </ul>
-</p>
-&nbsp;<br>
-<a name=relaxcount><h5>Relax Count</h5></a>
-&nbsp;<br>
+&nbsp;<br />
+<h5><a name="relaxcount"></a>Relax Count</h5>
+&nbsp;<br />
 <p>
 The standard relax count is 1. If not enough similar structures are found in
 the training set, the default boundaries are relaxed incrementally. 
 </p>
-&nbsp;<br>
-<a name=setsize><h5>Set Size</h5></a>
-&nbsp;<br>
+&nbsp;<br />
+<h5><a name="setsize"></a>Set Size</h5>
+&nbsp;<br />
 <p>
 Number of similar structures used to compute the results
 </p>
-&nbsp;<br>
+&nbsp;<br />
 <h4>DOPE</h4>
-&nbsp;<br>
-<a name=z-dope><h5>z-DOPE</h5></a>
-&nbsp;<br>
+&nbsp;<br />
+<h5><a name="z-dope"></a>z-DOPE</h5>
+&nbsp;<br />
 <p>
 Using probability theory, we derive an atomic distance- dependent
 statistical potential from a sample of native structures that does not depend
@@ -162,8 +157,8 @@ sample native structure; it thus accounts for the finite and spherical shape
 of the native structures. The evaluation server reports the normalized z-DOPE
 score. 
 </p>
-&nbsp;<br>
-<a name=dope_profile><h5>DOPE Profile</h5></a>
+&nbsp;<br />
+<h5><a name="dope_profile"></a>DOPE Profile</h5>
 <p>
 DOPE energy profile, smoothed over a 15 residue window, normalized over the
 number of DOPE restraints acting on each residue. A plot is shown; the raw
@@ -171,13 +166,13 @@ profile files can also be downloaded (each is a simple text file containing
 the residue number in the leftmost column and the DOPE score in the rightmost
 column).
 </p>
-&nbsp;<br>
+&nbsp;<br />
 <h4>GA341</h4>
 <p>
 </p>
-&nbsp;<br>
-<a name=ga341><h5>GA341</h5></a>
-&nbsp;<br>
+&nbsp;<br />
+<h5><a name="ga341"></a>GA341</h5>
+&nbsp;<br />
 <p>
 Score for the reliability of a model, derived from statistical potentials
 (<a href="https://salilab.org/pdf/Melo_ProteinSci_2002.pdf">F. Melo,
@@ -187,18 +182,18 @@ a probability of the correct fold that is larger than 95%. A fold is correct
 when at least 30% of its C&alpha; atoms superpose within 3.5&Aring;
 of their correct positions.
 </p>
-&nbsp;<br>
-<a name=z-surf><h5>z-surf</h5></a>
+&nbsp;<br />
+<h5><a name="z-surf"></a>z-surf</h5>
 <p>
 A surface statistical potential that contributes to GA341.
 </p>
-&nbsp;<br>
-<a name=z-pair><h5>z-pair</h5></a>
+&nbsp;<br />
+<h5><a name="z-pair"></a>z-pair</h5>
 <p>
 A pairwise statistical potential that contributes to GA341.
 </p>
-&nbsp;<br>
-<a name=z-combi><h5>z-combi</h5></a>
+&nbsp;<br />
+<h5><a name="z-combi"></a>z-combi</h5>
 <p>
 A combined statistical potential that contributes to GA341.
 </p>
