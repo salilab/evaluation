@@ -17,12 +17,12 @@ from modeller.scripts import complete_pdb
 def get_profile(profile_file):
     """Read `profile_file` into a Python array."""
 
-    f = file(profile_file)
     vals = []
-    for line in f:
-        if not line.startswith('#') and len(line) > 10:
-            spl = line.split()
-            vals.append(float(spl[-1]))
+    with open(profile_file) as f:
+        for line in f:
+            if not line.startswith('#') and len(line) > 10:
+                spl = line.split()
+                vals.append(float(spl[-1]))
     return vals
 
 
