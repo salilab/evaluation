@@ -31,20 +31,20 @@ class Tests(saliweb.test.TestCase):
                      "ATOM      2  CA  ALA     1      26.711  14.576   5.091\n")
 
         # Successful submission (no email)
-        data['pdb_file'] = open(pdbf)
+        data['pdb_file'] = open(pdbf, 'rb')
         rv = c.post('/job', data=data, follow_redirects=True)
         self.assertEqual(rv.status_code, 503)  # job not finished yet
-        r = re.compile('Your job has been submitted.*You can check on',
+        r = re.compile(b'Your job has been submitted.*You can check on',
                        re.MULTILINE | re.DOTALL)
         self.assertRegexpMatches(rv.data, r)
 
         # Successful submission (with email)
         data['email'] = 'test@test.com'
-        data['pdb_file'] = open(pdbf)
+        data['pdb_file'] = open(pdbf, 'rb')
         rv = c.post('/job', data=data, follow_redirects=True)
         self.assertEqual(rv.status_code, 503)  # job not finished yet
-        r = re.compile('Your job has been submitted.*You will be notified.*'
-                       'You can check on', re.MULTILINE | re.DOTALL)
+        r = re.compile(b'Your job has been submitted.*You will be notified.*'
+                       b'You can check on', re.MULTILINE | re.DOTALL)
         self.assertRegexpMatches(rv.data, r)
 
     def test_submit_page_alignment(self):
@@ -63,16 +63,16 @@ class Tests(saliweb.test.TestCase):
             fh.write("\n")
 
         data={'modkey': saliweb.test.get_modeller_key(),
-              'pdb_file': open(pdbf),
-              'alignment_file': open(alf),
+              'pdb_file': open(pdbf, 'rb'),
+              'alignment_file': open(alf, 'rb'),
               'name': 'testjob',
               'email': 'test@test.com'}
         rv = c.post('/job', data=data, follow_redirects=True)
         self.assertEqual(rv.status_code, 503)  # job not finished yet
-        r = re.compile('Your job has been submitted to the server!.*'
-                       'Your job ID is testjob.*'
-                       'notified at test@test.com when job results '
-                       'are available',
+        r = re.compile(b'Your job has been submitted to the server!.*'
+                       b'Your job ID is testjob.*'
+                       b'notified at test@test.com when job results '
+                       b'are available',
                        re.MULTILINE | re.DOTALL)
         self.assertRegexpMatches(rv.data, r)
 
@@ -89,9 +89,10 @@ class Tests(saliweb.test.TestCase):
                      "ATOM      2  CA  ALA     1      26.711  14.576   5.091\n")
 
         modkey = saliweb.test.get_modeller_key()
-        rv = c.post('/job', data={'modkey': modkey, 'model_file': open(pdbf)})
+        rv = c.post('/job',
+                    data={'modkey': modkey, 'model_file': open(pdbf, 'rb')})
         self.assertEqual(rv.status_code, 200)
-        r = re.compile('<\?xml.*<job xlink:href=.*&amp;force_xml=1',
+        r = re.compile(b'<\?xml.*<job xlink:href=.*&amp;force_xml=1',
                        re.MULTILINE | re.DOTALL)
         self.assertRegexpMatches(rv.data, r)
 

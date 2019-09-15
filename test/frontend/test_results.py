@@ -48,26 +48,26 @@ A Compactness 0.145962
 
             # Test with no DOPE profile
             rv = c.get('/job/testjob2?passwd=%s' % j.passwd)
-            r = re.compile('Predicted RMSD.*18\.314.*z-DOPE:.*1\.794.*'
-                           'DOPE Profile not available',
+            r = re.compile(b'Predicted RMSD.*18\.314.*z-DOPE:.*1\.794.*'
+                           b'DOPE Profile not available',
                            re.MULTILINE | re.DOTALL)
             self.assertRegexpMatches(rv.data, r)
 
             # Test with PNG DOPE profile
             j.make_file("dope_profile.png")
             rv = c.get('/job/testjob2?passwd=%s' % j.passwd)
-            r = re.compile('Predicted RMSD.*18\.314.*z-DOPE:.*1\.794.*'
-                           'dope_profile\.png',
+            r = re.compile(b'Predicted RMSD.*18\.314.*z-DOPE:.*1\.794.*'
+                           b'dope_profile\.png',
                            re.MULTILINE | re.DOTALL)
             self.assertRegexpMatches(rv.data, r)
 
             # Test with SVG DOPE profile
             j.make_file("dope_profile.svg")
             rv = c.get('/job/testjob2?passwd=%s' % j.passwd)
-            r = re.compile('Predicted RMSD.*18\.314.*z-DOPE:.*1\.794.*'
-                           'dope_profile\.svg.*'
-                           'Download raw DOPE profile files:.*'
-                           'input\.profile_A.*chain A',
+            r = re.compile(b'Predicted RMSD.*18\.314.*z-DOPE:.*1\.794.*'
+                           b'dope_profile\.svg.*'
+                           b'Download raw DOPE profile files:.*'
+                           b'input\.profile_A.*chain A',
                            re.MULTILINE | re.DOTALL)
             self.assertRegexpMatches(rv.data, r)
 
@@ -81,9 +81,9 @@ Error error2
 """)
             c = evaluation.app.test_client()
             rv = c.get('/job/testjob3?passwd=%s' % j.passwd)
-            r = re.compile('TSVMod failed on input PDB file.*'
-                           'Error error1.*Error error2.*'
-                           'Multiple Errors occurred!',
+            r = re.compile(b'TSVMod failed on input PDB file.*'
+                           b'Error error1.*Error error2.*'
+                           b'Multiple Errors occurred!',
                            re.MULTILINE | re.DOTALL)
             self.assertRegexpMatches(rv.data, r)
 
@@ -94,9 +94,9 @@ Error error2
             j.make_file("modeller.results")
             c = evaluation.app.test_client()
             rv = c.get('/job/testjob3?passwd=%s' % j.passwd)
-            r = re.compile('TSVMod Results.*error: cannot parse PDB.*'
-                           'Modeller Scoring Results.*'
-                           'DOPE Profile not available',
+            r = re.compile(b'TSVMod Results.*error: cannot parse PDB.*'
+                           b'Modeller Scoring Results.*'
+                           b'DOPE Profile not available',
                            re.MULTILINE | re.DOTALL)
             self.assertRegexpMatches(rv.data, r)
 
@@ -107,7 +107,7 @@ Error error2
             j.make_file("modeller.results")
             c = evaluation.app.test_client()
             rv = c.get('/job/testjob3?passwd=%s&force_xml=1' % j.passwd)
-            r = re.compile('<\?xml.*<results_file.*evaluation\.xml',
+            r = re.compile(b'<\?xml.*<results_file.*evaluation\.xml',
                            re.MULTILINE | re.DOTALL)
             self.assertRegexpMatches(rv.data, r)
 
@@ -116,7 +116,7 @@ Error error2
         with saliweb.test.make_frontend_job('testjob4') as j:
             c = evaluation.app.test_client()
             rv = c.get('/job/testjob4?passwd=%s' % j.passwd)
-            r = re.compile('Your ModEval job.*failed to produce results',
+            r = re.compile(b'Your ModEval job.*failed to produce results',
                            re.MULTILINE | re.DOTALL)
             self.assertRegexpMatches(rv.data, r)
 

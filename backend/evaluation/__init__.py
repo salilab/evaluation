@@ -1,3 +1,4 @@
+from __future__ import print_function
 import saliweb.backend
 import os
 import sys
@@ -50,20 +51,20 @@ class Job(saliweb.backend.Job):
             seq_ident=" --seq_ident "+str(seq_ident)
         else:
             seq_ident=""
-        print >>fh,"#!/bin/csh"
-        print >>fh,"cd "+directory
-        print >>fh,"echo STARTED >job-state"
-        print >>fh,evaluation_script+">&evaluation.log"
-        print >>fh, self.config.modeller_setup
-        print >>fh, "python " + self.config.modeller_script \
-                    + " --model input.pdb " + seq_ident + ">&modeller.log"
-        print >>fh, "echo \"<evaluation>\" >evaluation.txt\n"
-        print >>fh, "rm -f evaluation.xml\n"
-        print >>fh, "cat *.xml >>evaluation.txt\n"
-        print >>fh, "echo \"</evaluation>\" >>evaluation.txt\n"
-        print >>fh, "mv evaluation.txt evaluation.xml\n"
-        print >>fh,"sleep 2s"
-        print >>fh,"echo DONE >job-state"
+        print("#!/bin/csh", file=fh)
+        print("cd "+directory, file=fh)
+        print("echo STARTED >job-state", file=fh)
+        print(evaluation_script+">&evaluation.log", file=fh)
+        print(self.config.modeller_setup, file=fh)
+        print("python " + self.config.modeller_script \
+              + " --model input.pdb " + seq_ident + ">&modeller.log", file=fh)
+        print("echo \"<evaluation>\" >evaluation.txt\n", file=fh)
+        print("rm -f evaluation.xml\n", file=fh)
+        print("cat *.xml >>evaluation.txt\n", file=fh)
+        print("echo \"</evaluation>\" >>evaluation.txt\n", file=fh)
+        print("mv evaluation.txt evaluation.xml\n", file=fh)
+        print("sleep 2s", file=fh)
+        print("echo DONE >job-state", file=fh)
         fh.close()
         r = self.runnercls("cd "+directory+"; chmod +x "+script+";./"+script)
         return r
