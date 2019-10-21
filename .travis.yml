@@ -18,7 +18,7 @@ cache:
   pip: true
 install:
   - export PYTHONPATH=$(echo $(dirname $(which python))/../lib/python*/site-packages)
-  - pip install coverage matplotlib==1.5.3 flask
+  - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then pip install coverage matplotlib==1.5.3 flask; else pip install coverage matplotlib flask; fi
   - git clone --depth=5 https://github.com/salilab/saliweb
   - (cd saliweb && scons modeller_key=UNKNOWN pythondir=$PYTHONPATH perldir=~/perl5/lib/perl5 prefix=~/usr webdir=~/www install && touch $PYTHONPATH/saliweb/frontend/config.py)
 script:
