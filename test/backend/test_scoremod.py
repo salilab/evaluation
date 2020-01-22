@@ -3,6 +3,12 @@ import saliweb.test
 import saliweb.backend
 import sys
 
+class DummyMatPlotLib(object):
+    @staticmethod
+    def use(*args, **keys):
+        pass
+
+
 class DummyPyLab(object):
     @staticmethod
     def figure(*args, **keys):
@@ -74,7 +80,8 @@ class ScoreModellerTests(saliweb.test.TestCase):
     """Check score_modeller script"""
 
     def setUp(self):
-        # Provide fake modules for pylab and modeller
+        # Provide fake modules for pylab, matplotlib and modeller
+        sys.modules['matplotlib'] = DummyMatPlotLib
         sys.modules['pylab'] = DummyPyLab
         sys.modules['modeller'] = DummyModeller
         sys.modules['modeller.automodel'] = DummyAutoModel
@@ -83,6 +90,7 @@ class ScoreModellerTests(saliweb.test.TestCase):
         self.scoremod = evaluation.score_modeller
 
     def tearDown(self):
+        del sys.modules['matplotlib']
         del sys.modules['pylab']
         del sys.modules['modeller']
         del sys.modules['modeller.automodel']
