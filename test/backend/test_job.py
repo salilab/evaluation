@@ -39,7 +39,7 @@ class JobTests(saliweb.test.TestCase):
             r = j.run()
             self.assert_in_file('score_all.sh', 'module load modeller')
             self.assert_in_file('score_all.sh',
-                    'python runmod --model input.pdb  --seq_ident %s>' \
+                    'python3 runmod --model input.pdb  --seq_ident %s>' \
                     % exp_seqid)
 
     def test_run_align_model(self):

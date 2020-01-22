@@ -56,7 +56,7 @@ class Job(saliweb.backend.Job):
         print("echo STARTED >job-state", file=fh)
         print(evaluation_script+">&evaluation.log", file=fh)
         print(self.config.modeller_setup, file=fh)
-        print("python " + self.config.modeller_script \
+        print("python3 " + self.config.modeller_script \
               + " --model input.pdb " + seq_ident + ">&modeller.log", file=fh)
         print("echo \"<evaluation>\" >evaluation.txt\n", file=fh)
         print("rm -f evaluation.xml\n", file=fh)
