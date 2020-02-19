@@ -31,7 +31,7 @@ def handle_new_job():
             "No coordinate file specified")
 
     job = saliweb.frontend.IncomingJob(job_name)
-    with open(job.get_path('summary.txt'), 'w') as fh:
+    with open(job.get_path('summary.txt'), 'w', encoding='utf-8') as fh:
         fh.write("JobName\t%s\n" % job_name)
         if email:
             fh.write("Email\t%s\n" % email)
