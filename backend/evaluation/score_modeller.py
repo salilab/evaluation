@@ -119,8 +119,8 @@ def main():
               "    </modeller_results>\n"
               % (opts.model, c.name, selected_chain.seq_id, z_dope_score,
                  ga341, z_pair, z_surf, z_comb, compactness), file=fhxml)
-    fh.close
-    fhxml.close
+    fh.close()
+    fhxml.close()
 
 
 if __name__ == '__main__':

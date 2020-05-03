@@ -48,28 +48,28 @@ A Compactness 0.145962
 
             # Test with no DOPE profile
             rv = c.get('/job/testjob2?passwd=%s' % j.passwd)
-            r = re.compile(b'Predicted RMSD.*18\.314.*z-DOPE:.*1\.794.*'
+            r = re.compile(b'Predicted RMSD.*18\\.314.*z-DOPE:.*1\\.794.*'
                            b'DOPE Profile not available',
                            re.MULTILINE | re.DOTALL)
-            self.assertRegexpMatches(rv.data, r)
+            self.assertRegex(rv.data, r)
 
             # Test with PNG DOPE profile
             j.make_file("dope_profile.png")
             rv = c.get('/job/testjob2?passwd=%s' % j.passwd)
-            r = re.compile(b'Predicted RMSD.*18\.314.*z-DOPE:.*1\.794.*'
-                           b'dope_profile\.png',
+            r = re.compile(b'Predicted RMSD.*18\\.314.*z-DOPE:.*1\\.794.*'
+                           b'dope_profile\\.png',
                            re.MULTILINE | re.DOTALL)
-            self.assertRegexpMatches(rv.data, r)
+            self.assertRegex(rv.data, r)
 
             # Test with SVG DOPE profile
             j.make_file("dope_profile.svg")
             rv = c.get('/job/testjob2?passwd=%s' % j.passwd)
-            r = re.compile(b'Predicted RMSD.*18\.314.*z-DOPE:.*1\.794.*'
-                           b'dope_profile\.svg.*'
+            r = re.compile(b'Predicted RMSD.*18\\.314.*z-DOPE:.*1\\.794.*'
+                           b'dope_profile\\.svg.*'
                            b'Download raw DOPE profile files:.*'
-                           b'input\.profile_A.*chain A',
+                           b'input\\.profile_A.*chain A',
                            re.MULTILINE | re.DOTALL)
-            self.assertRegexpMatches(rv.data, r)
+            self.assertRegex(rv.data, r)
 
     def test_ok_job_with_errors(self):
         """Test display of OK job with no-TSVMod and Modeller errors"""
@@ -85,7 +85,7 @@ Error error2
                            b'Error error1.*Error error2.*'
                            b'Multiple Errors occurred!',
                            re.MULTILINE | re.DOTALL)
-            self.assertRegexpMatches(rv.data, r)
+            self.assertRegex(rv.data, r)
 
     def test_ok_job_with_tsvmod_errors(self):
         """Test display of OK job with TSVMod errors"""
@@ -98,7 +98,7 @@ Error error2
                            b'Modeller Scoring Results.*'
                            b'DOPE Profile not available',
                            re.MULTILINE | re.DOTALL)
-            self.assertRegexpMatches(rv.data, r)
+            self.assertRegex(rv.data, r)
 
     def test_ok_job_xml(self):
         """Test display of OK job, XML forced"""
@@ -107,9 +107,9 @@ Error error2
             j.make_file("modeller.results")
             c = evaluation.app.test_client()
             rv = c.get('/job/testjob3?passwd=%s&force_xml=1' % j.passwd)
-            r = re.compile(b'<\?xml.*<results_file.*evaluation\.xml',
+            r = re.compile(b'<\\?xml.*<results_file.*evaluation\\.xml',
                            re.MULTILINE | re.DOTALL)
-            self.assertRegexpMatches(rv.data, r)
+            self.assertRegex(rv.data, r)
 
     def test_failed_job(self):
         """Test display of failed job"""
@@ -118,7 +118,7 @@ Error error2
             rv = c.get('/job/testjob4?passwd=%s' % j.passwd)
             r = re.compile(b'Your ModEval job.*failed to produce results',
                            re.MULTILINE | re.DOTALL)
-            self.assertRegexpMatches(rv.data, r)
+            self.assertRegex(rv.data, r)
 
 
 if __name__ == '__main__':

@@ -18,12 +18,14 @@ class JobTests(saliweb.test.TestCase):
         """Test sanity checking in run method"""
         j = self.make_test_job(evaluation.Job, 'RUNNING')
         d = saliweb.test.RunInDir(j.directory)
-        open('parameters.txt', 'w').write('SequenceIdentity: foo\n')
+        with open('parameters.txt', 'w') as fh:
+            fh.write('SequenceIdentity: foo\n')
         self.assertRaises(TypeError, j.run)
 
     def assert_in_file(self, fname, srch):
-        contents = open(fname).read()
-        self.assert_(srch in contents,
+        with open(fname) as fh:
+            contents = fh.read()
+        self.assertIn(srch, contents,
                      "String %s not found in file %s contents: %s" \
                      % (srch, fname, contents))
 
@@ -32,10 +34,9 @@ class JobTests(saliweb.test.TestCase):
         j = self.make_test_job(evaluation.Job, 'RUNNING')
         d = saliweb.test.RunInDir(j.directory)
         for seqid, exp_seqid in (('', '30.0'), ('50', '50.0'), ('0.1', '10.0')):
-            f = open('parameters.txt', 'w')
-            f.write('Dummy: foo\n')
-            f.write('SequenceIdentity: %s\n' % seqid)
-            f.close()
+            with open('parameters.txt', 'w') as f:
+                f.write('Dummy: foo\n')
+                f.write('SequenceIdentity: %s\n' % seqid)
             r = j.run()
             self.assert_in_file('score_all.sh', 'module load modeller')
             self.assert_in_file('score_all.sh',
@@ -50,12 +51,14 @@ class JobTests(saliweb.test.TestCase):
         r = j.run()
         self.assert_in_file('score_all.sh', 'evalscript>')
 
-        open('alignment.pir', 'w')
+        with open('alignment.pir', 'w') as fh:
+            pass
         r = j.run()
         self.assert_in_file('score_all.sh',
                             'evalscript -alignment alignment.pir>')
 
-        open('input.pdb', 'w')
+        with open('input.pdb', 'w') as fh:
+            pass
         r = j.run()
         self.assert_in_file('score_all.sh',
                       'evalscript -model input.pdb -alignment alignment.pir>')
@@ -65,9 +68,11 @@ class JobTests(saliweb.test.TestCase):
         j = self.make_test_job(evaluation.Job, 'COMPLETED')
         d = saliweb.test.RunInDir(j.directory)
         self.assertRaises(evaluation.MissingOutputError, j.postprocess)
-        open('modeller.results', 'w')
+        with open('modeller.results', 'w') as fh:
+            pass
         self.assertRaises(evaluation.MissingOutputError, j.postprocess)
-        open('input.tsvmod.results', 'w')
+        with open('input.tsvmod.results', 'w') as fh:
+            pass
         j.postprocess()
 
 

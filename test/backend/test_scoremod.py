@@ -99,12 +99,11 @@ class ScoreModellerTests(saliweb.test.TestCase):
     def test_get_profile(self):
         """Check get_profile function"""
         d = saliweb.test.RunInTempDir()
-        f = open('profile', 'w')
-        f.write('# comment\n')
-        f.write('short\n')
-        f.write('1.0 2.0 3.0 4.0\n')
-        f.write('5.0 6.0 7.0\n')
-        f.close()
+        with open('profile', 'w') as f:
+            f.write('# comment\n')
+            f.write('short\n')
+            f.write('1.0 2.0 3.0 4.0\n')
+            f.write('5.0 6.0 7.0\n')
         vals = self.scoremod.get_profile('profile')
         self.assertEqual(vals, [4.0, 7.0])
 
@@ -130,8 +129,10 @@ class ScoreModellerTests(saliweb.test.TestCase):
             DummyPyLab.error = True
             DummyModel.has_seq_id = True
             sys.argv = ['foo', '--model', 'test.pdb', '--seq_ident', '50.0']
-            open('input.profile_A', 'w').write('1.0\n2.0\n')
-            open('input.profile_B', 'w').write('3.0\n4.0\n')
+            with open('input.profile_A', 'w') as fh:
+                fh.write('1.0\n2.0\n')
+            with open('input.profile_B', 'w') as fh:
+                fh.write('3.0\n4.0\n')
             DummyScripts.error = True
             self.assertRaises(SystemExit, self.scoremod.main)
             self.assert_in_file('modeller.results', 'Not a valid PDB file')
@@ -154,14 +155,16 @@ class ScoreModellerTests(saliweb.test.TestCase):
             # No seq_id on command line
             sys.argv = ['foo', '--model', 'test.pdb']
             self.scoremod.main()
-            contents = open('modeller.results.xml').read()
+            with open('modeller.results.xml') as fh:
+                contents = fh.read()
             self.assertEqual(contents, '')
         finally:
             sys.argv = old_argv
 
     def assert_in_file(self, fname, srch):
-        contents = open(fname).read()
-        self.assert_(srch in contents,
+        with open(fname) as fh:
+            contents = fh.read()
+        self.assertIn(srch, contents,
                      "String %s not found in file %s contents: %s" \
                      % (srch, fname, contents))
 

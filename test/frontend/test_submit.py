@@ -36,7 +36,7 @@ class Tests(saliweb.test.TestCase):
         self.assertEqual(rv.status_code, 503)  # job not finished yet
         r = re.compile(b'Your job has been submitted.*You can check on',
                        re.MULTILINE | re.DOTALL)
-        self.assertRegexpMatches(rv.data, r)
+        self.assertRegex(rv.data, r)
 
         # Successful submission (with email)
         data['email'] = 'test@test.com'
@@ -45,7 +45,7 @@ class Tests(saliweb.test.TestCase):
         self.assertEqual(rv.status_code, 503)  # job not finished yet
         r = re.compile(b'Your job has been submitted.*You will be notified.*'
                        b'You can check on', re.MULTILINE | re.DOTALL)
-        self.assertRegexpMatches(rv.data, r)
+        self.assertRegex(rv.data, r)
 
     def test_submit_page_alignment(self):
         """Test submit page with alignment"""
@@ -74,7 +74,7 @@ class Tests(saliweb.test.TestCase):
                        b'notified at test@test.com when job results '
                        b'are available',
                        re.MULTILINE | re.DOTALL)
-        self.assertRegexpMatches(rv.data, r)
+        self.assertRegex(rv.data, r)
 
     def test_submit_page_xml(self):
         """Test submit page with XML output forced"""
@@ -94,7 +94,7 @@ class Tests(saliweb.test.TestCase):
         self.assertEqual(rv.status_code, 200)
         r = re.compile(b'<\?xml.*<job xlink:href=.*&amp;force_xml=1',
                        re.MULTILINE | re.DOTALL)
-        self.assertRegexpMatches(rv.data, r)
+        self.assertRegex(rv.data, r)
 
     def test_handle_seq_ident(self):
         """Test handle_seq_ident()"""

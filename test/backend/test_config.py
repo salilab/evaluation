@@ -6,7 +6,8 @@ class ConfigTest(unittest.TestCase):
     """Check Config class"""
     def test_init(self):
         """Check Config init"""
-        open('config', 'w').write("""
+        with open('config', 'w') as fh:
+            fh.write("""
 [general]
 admin_email: test@salilab.org
 service_name: test_service

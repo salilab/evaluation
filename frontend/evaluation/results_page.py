@@ -64,7 +64,7 @@ def parse_modeller(job, errors):
     results = []
     chains = {}
 
-    blank_line = re.compile('\s*$')
+    blank_line = re.compile(r'\s*$')
     with open(job.get_path('modeller.results')) as fh:
         for line in fh:
             if blank_line.match(line):  # skip blank lines
