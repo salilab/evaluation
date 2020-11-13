@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/salilab/evaluation.svg?branch=master)](https://travis-ci.org/salilab/evaluation)
+[![Build Status](https://travis-ci.com/salilab/evaluation.svg?branch=master)](https://travis-ci.com/salilab/evaluation)
 [![codecov](https://codecov.io/gh/salilab/evaluation/branch/master/graph/badge.svg)](https://codecov.io/gh/salilab/evaluation)
 
 This is the source code for [ModEval](https://salilab.org/evaluation/), a web
