@@ -2,6 +2,7 @@ import unittest
 import evaluation
 import os
 
+
 class ConfigTest(unittest.TestCase):
     """Check Config class"""
     def test_init(self):

@@ -3,6 +3,7 @@ import saliweb.test
 import saliweb.backend
 import sys
 
+
 class DummyMatPlotLib(object):
     @staticmethod
     def use(*args, **keys):
@@ -13,68 +14,87 @@ class DummyPyLab(object):
     @staticmethod
     def figure(*args, **keys):
         pass
+
     @staticmethod
     def xlabel(*args, **keys):
         pass
+
     @staticmethod
     def ylabel(*args, **keys):
         pass
+
     @staticmethod
     def plot(*args, **keys):
         if DummyPyLab.error:
             raise ValueError("some error in pylab")
+
     @staticmethod
     def legend(*args, **keys):
         pass
+
     @staticmethod
     def savefig(*args, **keys):
         pass
 
+
 class DummyAutoModel(object):
     pass
+
 
 class DummyChain(object):
     def __init__(self, name):
         self.name = name
-        self.residues = [0,1,2]
+        self.residues = [0, 1, 2]
+
 
 class DummyModel(object):
     def __init__(self):
         self.chains = [DummyChain(x) for x in ['', 'B']]
         if self.has_seq_id:
-            self.seq_id = 37.0 # Simulate reading seq_id from PDB header
+            self.seq_id = 37.0  # Simulate reading seq_id from PDB header
+
     def assess_normalized_dope(self):
         return -3.0
+
     def assess_ga341(self):
         if not hasattr(self, 'seq_id'):
             raise ValueError("Need to set seq_id")
         return (1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)
 
+
 class DummyScripts(object):
     error = False
+
     def complete_pdb(*args, **keys):
         if DummyScripts.error:
             raise ValueError("Bad PDB")
         return DummyModel()
     complete_pdb = staticmethod(complete_pdb)
 
+
 class DummyModeller(object):
     class log(object):
-        def minimal(*args): pass
+        def minimal(*args):
+            pass
         minimal = staticmethod(minimal)
+
     class environ(object):
         class libs:
             class topology:
                 def read(*args, **keys): pass
                 read = staticmethod(read)
+
             class parameters:
                 def read(*args, **keys): pass
                 read = staticmethod(read)
+
     class selection(object):
         def __init__(self, *args):
             pass
+
         def assess_dope(self, *args, **keys):
             pass
+
 
 class ScoreModellerTests(saliweb.test.TestCase):
     """Check score_modeller script"""
@@ -106,6 +126,7 @@ class ScoreModellerTests(saliweb.test.TestCase):
             f.write('5.0 6.0 7.0\n')
         vals = self.scoremod.get_profile('profile')
         self.assertEqual(vals, [4.0, 7.0])
+        del d
 
     def test_get_options(self):
         """Check get_options function"""
@@ -160,13 +181,15 @@ class ScoreModellerTests(saliweb.test.TestCase):
             self.assertEqual(contents, '')
         finally:
             sys.argv = old_argv
+        del d
 
     def assert_in_file(self, fname, srch):
         with open(fname) as fh:
             contents = fh.read()
         self.assertIn(srch, contents,
-                     "String %s not found in file %s contents: %s" \
-                     % (srch, fname, contents))
+                      "String %s not found in file %s contents: %s"
+                      % (srch, fname, contents))
+
 
 if __name__ == '__main__':
     unittest.main()

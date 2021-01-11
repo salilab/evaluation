@@ -6,14 +6,14 @@ import os
 from . import submit, results_page
 
 
-parameters=[Parameter("name", "Job name", optional=True),
-            Parameter("modkey", "MODELLER license key"),
-            FileParameter("pdb_file",
-                          "PDB file containing model to be evaluated"),
-            FileParameter("alignment_file", "Alignment file in PIR format",
-                          optional=True),
-            Parameter("seq_ident", "Target-template sequence identity",
-                      optional=True)]
+parameters = [Parameter("name", "Job name", optional=True),
+              Parameter("modkey", "MODELLER license key"),
+              FileParameter("pdb_file",
+                            "PDB file containing model to be evaluated"),
+              FileParameter("alignment_file", "Alignment file in PIR format",
+                            optional=True),
+              Parameter("seq_ident", "Target-template sequence identity",
+                        optional=True)]
 app = saliweb.frontend.make_application(__name__, parameters)
 
 
@@ -62,7 +62,7 @@ def results(name):
 def results_file(name, fp):
     job = get_completed_job(name, request.args.get('passwd'))
     if (fp in ("evaluation.xml", "dope_profile.A.png", "modeller.log")
-        or "dope_profile" in fp or "input.profile" in fp):
+            or "dope_profile" in fp or "input.profile" in fp):
         return send_from_directory(job.directory, fp)
     else:
         abort(404)

@@ -5,7 +5,8 @@ import os
 import glob
 
 
-TSVModResult = collections.namedtuple('TSVModResult',
+TSVModResult = collections.namedtuple(
+    'TSVModResult',
     ('modelfile', 'chain', 'matchtype', 'featurecount', 'relaxcount', 'size',
      'rmsd', 'no35', 'ga341', 'ga341_pair', 'ga341_surf', 'ga341_comb',
      'zdope'))
@@ -21,12 +22,11 @@ class ResultError(object):
 
 def show_results_page(job):
     errors = []
-    tsvmod_results = parse_tsvmod(job, errors)
-    modeller_results = parse_modeller(job, errors)
 
-    return saliweb.frontend.render_results_template("results_ok.html",
+    return saliweb.frontend.render_results_template(
+        "results_ok.html",
         extra_xml_outputs=['evaluation.xml'],
-        tsvmod_results=list(tsvmod_results),
+        tsvmod_results=list(parse_tsvmod(job, errors)),
         modeller_results=parse_modeller(job, errors),
         dope_profile=get_dope_profile(job, errors),
         dope_profile_files=list(get_dope_profile_files(job)),

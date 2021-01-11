@@ -28,10 +28,12 @@ class Tests(saliweb.test.TestCase):
     def test_ok_job(self):
         """Test display of OK job"""
         with saliweb.test.make_frontend_job('testjob2') as j:
-            j.make_file("input.tsvmod.pred",
-"""Modelfile|Chain|TSVMod type|Feature Count|Relax Count|Size|Predicted RMSD|Predicted NO35|GA341|Pair|Surf|Comb|z-Dope
-input.pdb|A|MatchBySS|Reduced|1|420|18.314|0.104|0.694712|-0.6143005|-0.3749842|-0.6870231|0.1793957
-""")
+            j.make_file(
+                "input.tsvmod.pred",
+                "Modelfile|Chain|TSVMod type|Feature Count|Relax Count|Size|"
+                "Predicted RMSD|Predicted NO35|GA341|Pair|Surf|Comb|z-Dope\n"
+                "input.pdb|A|MatchBySS|Reduced|1|420|18.314|0.104|0.694712|"
+                "-0.6143005|-0.3749842|-0.6870231|0.1793957\n")
             j.make_file("modeller.results", """
 A SeqIdent 30.000000
 

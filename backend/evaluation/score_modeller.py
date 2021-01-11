@@ -1,18 +1,16 @@
 from __future__ import print_function
 from optparse import OptionParser
 import sys
-import os
 import itertools
+from modeller import log, environ, selection
+from modeller.scripts import complete_pdb
 
 import matplotlib
 # Force matplotlib (and pylab) to not use any X backend
 # (we don't have a display).
 matplotlib.use('Agg')
-import pylab
+import pylab   # noqa: E402
 
-from modeller import *
-from modeller.automodel import *
-from modeller.scripts import complete_pdb
 
 def get_profile(profile_file):
     """Read `profile_file` into a Python array."""
@@ -28,6 +26,7 @@ def get_profile(profile_file):
 
 """Runs all ModPipe Model Evaluation routines (dope,zdope,ga341)
 """
+
 
 def get_options():
     """Parse command-line options"""
@@ -49,10 +48,11 @@ only the z-dope score will be computed.""")
         parser.error("Cannot proceed without --model (input pdb file)")
     return opts
 
+
 def main():
     opts = get_options()
-    fh=open("modeller.results","w")
-    fhxml=open("modeller.results.xml","w")
+    fh = open("modeller.results", "w")
+    fhxml = open("modeller.results.xml", "w")
     print("modelfile "+str(opts))
     log.minimal()
     env = environ()
@@ -60,8 +60,8 @@ def main():
     env.libs.parameters.read(file='$(LIB)/par.lib')
 
     try:
-        mdl=complete_pdb(env,opts.model, transfer_res_num=True)
-    except:
+        mdl = complete_pdb(env, opts.model, transfer_res_num=True)
+    except Exception:
         print("Error in Modelfile: Not a valid PDB file\n", file=fh)
         print("    <modeller_results>\n"
               "        <type>Error in Modelfile: Not a valid PDB file</type>\n"
@@ -72,28 +72,31 @@ def main():
 
     for c, color in zip(mdl.chains, itertools.cycle(colors)):
         (c.name, len(c.residues))
-        selected_chain=complete_pdb(env,opts.model,model_segment=('FIRST:'+c.name,'LAST:'+c.name))
+        selected_chain = complete_pdb(
+            env, opts.model, model_segment=('FIRST:'+c.name, 'LAST:'+c.name))
         if not c.name:
-            c.name="A"
+            c.name = "A"
         z_dope_score = selected_chain.assess_normalized_dope()
         s = selection(selected_chain)
-        s.assess_dope(output='ENERGY_PROFILE NO_REPORT', file='input.profile_'+c.name,
-                  normalize_profile=True, smoothing_window=15)
+        s.assess_dope(output='ENERGY_PROFILE NO_REPORT',
+                      file='input.profile_'+c.name,
+                      normalize_profile=True, smoothing_window=15)
         profile = get_profile('input.profile_'+c.name)
         try:
-            pylab.figure(1, figsize=(10,6))
+            pylab.figure(1, figsize=(10, 6))
             pylab.xlabel('Alignment position')
             pylab.ylabel('DOPE per-residue score')
-            pylab.plot(profile, color=color, linewidth=2, label='Chain '+c.name)
+            pylab.plot(profile, color=color, linewidth=2,
+                       label='Chain '+c.name)
             pylab.legend()
             pylab.savefig('dope_profile.png', dpi=65)
             pylab.savefig('dope_profile.svg')
-        except:
+        except Exception:
             pass
 
         try:
-            (ga341, compactness, e_native_pair, e_native_surf, e_native_comb, \
-                    z_pair, z_surf, z_comb) = selected_chain.assess_ga341()
+            (ga341, compactness, e_native_pair, e_native_surf, e_native_comb,
+             z_pair, z_surf, z_comb) = selected_chain.assess_ga341()
         except ValueError:
             # Provide sequence identity if GA341 needs it
             if not opts.seq_ident:

@@ -1,9 +1,11 @@
 from __future__ import print_function
 import saliweb.backend
 import os
-import sys
 
-class MissingOutputError(Exception): pass
+
+class MissingOutputError(Exception):
+    pass
+
 
 def _read_parameters_file():
     """Read sequence identity from parameters file and return it"""
@@ -26,37 +28,38 @@ def _read_parameters_file():
                     seq_ident *= 100.
     return seq_ident
 
+
 class Job(saliweb.backend.Job):
 
     runnercls = saliweb.backend.LocalRunner
 
     def run(self):
         if os.path.exists("alignment.pir"):
-            alignment=" -alignment alignment.pir"
+            alignment = " -alignment alignment.pir"
         else:
-            alignment=""
+            alignment = ""
 
         if os.path.exists("input.pdb"):
-            model=" -model input.pdb"
+            model = " -model input.pdb"
         else:
-            model=""
+            model = ""
         seq_ident = _read_parameters_file()
 
-        directory=os.getcwd()
+        directory = os.getcwd()
         evaluation_script = self.config.evaluation_script \
-               + model+alignment
-        script="score_all.sh"
-        fh=open(directory+"/"+script,"w")
-        if (seq_ident>0):
-            seq_ident=" --seq_ident "+str(seq_ident)
+            + model+alignment
+        script = "score_all.sh"
+        fh = open(directory+"/"+script, "w")
+        if seq_ident > 0:
+            seq_ident = " --seq_ident "+str(seq_ident)
         else:
-            seq_ident=""
+            seq_ident = ""
         print("#!/bin/csh", file=fh)
         print("cd "+directory, file=fh)
         print("echo STARTED >job-state", file=fh)
         print(evaluation_script+">&evaluation.log", file=fh)
         print(self.config.modeller_setup, file=fh)
-        print("python3 " + self.config.modeller_script \
+        print("python3 " + self.config.modeller_script
               + " --model input.pdb " + seq_ident + ">&modeller.log", file=fh)
         print("echo \"<evaluation>\" >evaluation.txt\n", file=fh)
         print("rm -f evaluation.xml\n", file=fh)
