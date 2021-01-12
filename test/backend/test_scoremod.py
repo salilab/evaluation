@@ -78,7 +78,7 @@ class DummyModeller(object):
             pass
         minimal = staticmethod(minimal)
 
-    class environ(object):
+    class Environ(object):
         class libs:
             class topology:
                 def read(*args, **keys): pass
@@ -88,7 +88,7 @@ class DummyModeller(object):
                 def read(*args, **keys): pass
                 read = staticmethod(read)
 
-    class selection(object):
+    class Selection(object):
         def __init__(self, *args):
             pass
 

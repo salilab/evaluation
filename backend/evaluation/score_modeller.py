@@ -2,7 +2,7 @@ from __future__ import print_function
 from optparse import OptionParser
 import sys
 import itertools
-from modeller import log, environ, selection
+from modeller import log, Environ, Selection
 from modeller.scripts import complete_pdb
 
 import matplotlib
@@ -55,7 +55,7 @@ def main():
     fhxml = open("modeller.results.xml", "w")
     print("modelfile "+str(opts))
     log.minimal()
-    env = environ()
+    env = Environ()
     env.libs.topology.read(file='$(LIB)/top_heav.lib')
     env.libs.parameters.read(file='$(LIB)/par.lib')
 
@@ -77,7 +77,7 @@ def main():
         if not c.name:
             c.name = "A"
         z_dope_score = selected_chain.assess_normalized_dope()
-        s = selection(selected_chain)
+        s = Selection(selected_chain)
         s.assess_dope(output='ENERGY_PROFILE NO_REPORT',
                       file='input.profile_'+c.name,
                       normalize_profile=True, smoothing_window=15)
