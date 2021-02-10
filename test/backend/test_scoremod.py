@@ -134,7 +134,7 @@ class ScoreModellerTests(saliweb.test.TestCase):
             sys.argv = ['foo', '--model', 'test.pdb', '--seq_ident', '50.0']
             opts = self.scoremod.get_options()
             self.assertEqual(opts.model, 'test.pdb')
-            self.assertEqual(opts.seq_ident, '50.0')
+            self.assertAlmostEqual(opts.seq_ident, 50.0, delta=1e-3)
 
             sys.argv = ['foo', '--seq_ident', '50.0']
             self.assertRaises(SystemExit, self.scoremod.get_options)

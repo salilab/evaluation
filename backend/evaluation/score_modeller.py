@@ -1,5 +1,5 @@
 from __future__ import print_function
-from optparse import OptionParser
+from argparse import ArgumentParser
 import sys
 import itertools
 from modeller import log, Environ, Selection
@@ -30,23 +30,19 @@ def get_profile(profile_file):
 
 def get_options():
     """Parse command-line options"""
-    parser = OptionParser()
-    parser.set_usage("""
- This script runs Modeller to retrieve z-dope, and ga341
- Run `%prog -h` for help information
+    p = ArgumentParser(description="""
+ This script runs Modeller to retrieve z-dope, and ga341.
+ Run `%(prog)s -h` for help information
 """)
 
-    parser.add_option("--model", type="string", metavar="FILE",
-                      help="""Path and Filename of models file (PDB format)""")
-    parser.add_option("--seq_ident", type="string",
-                      help="""Sequence Identity to Template PDB File.
+    p.add_argument("--model", type=str, metavar="FILE", required=True,
+                   help="""Path and Filename of models file (PDB format)""")
+    p.add_argument("--seq_ident", type=float, default=None, metavar='PCT',
+                   help="""Sequence Identity to Template PDB File.
 If no sequence identity is given, either here or in the model file,
 only the z-dope score will be computed.""")
 
-    opts, args = parser.parse_args()
-    if (not opts.model):
-        parser.error("Cannot proceed without --model (input pdb file)")
-    return opts
+    return p.parse_args()
 
 
 def main():
@@ -99,9 +95,9 @@ def main():
              z_pair, z_surf, z_comb) = selected_chain.assess_ga341()
         except ValueError:
             # Provide sequence identity if GA341 needs it
-            if not opts.seq_ident:
+            if opts.seq_ident is None:
                 continue
-            selected_chain.seq_id = float(opts.seq_ident)
+            selected_chain.seq_id = opts.seq_ident
             (ga341, compactness, e_native_pair, e_native_surf, e_native_comb,
              z_pair, z_surf, z_comb) = selected_chain.assess_ga341()
         print("%s SeqIdent %f\n\n%s ZDOPE %f\n\n%s GA341 %f\n%s Z-PAIR %f\n"
