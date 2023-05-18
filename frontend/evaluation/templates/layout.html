@@ -4,6 +4,9 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename='modeval.css') }}" />
 {%- endblock %}
 
+{% block cluster_status %}
+{% endblock %}
+
 {% block navigation %}
 {{ get_navigation_links(
        [(url_for("index"), "ModEval Home"),
