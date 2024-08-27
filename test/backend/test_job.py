@@ -65,6 +65,26 @@ class JobTests(saliweb.test.TestCase):
                 'score_all.sh',
                 'evalscript -model input.pdb -alignment alignment.pir>')
 
+    def test_run_align_model_cif(self):
+        """Test handling of alignment and model in run method (mmCIF format)"""
+        j = self.make_test_job(evaluation.Job, 'RUNNING')
+        with saliweb.test.working_directory(j.directory):
+            _ = j.run()
+            self.assert_in_file('score_all.sh', 'evalscript>')
+
+            with open('alignment.pir', 'w'):
+                pass
+            _ = j.run()
+            self.assert_in_file('score_all.sh',
+                                'evalscript -alignment alignment.pir>')
+
+            with open('input.cif', 'w'):
+                pass
+            _ = j.run()
+            self.assert_in_file(
+                'score_all.sh',
+                'evalscript -model input.cif -alignment alignment.pir>')
+
     def test_postprocess(self):
         """Test Job.postprocess()"""
         j = self.make_test_job(evaluation.Job, 'COMPLETED')

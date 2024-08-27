@@ -38,7 +38,11 @@ class Job(saliweb.backend.Job):
         else:
             alignment = ""
 
-        if os.path.exists("input.pdb"):
+        mfname = "input.pdb"
+        if os.path.exists("input.cif"):
+            model = " -model input.cif"
+            mfname = "input.cif"
+        elif os.path.exists("input.pdb"):
             model = " -model input.pdb"
         else:
             model = ""
@@ -59,7 +63,8 @@ class Job(saliweb.backend.Job):
         print(evaluation_script+">&evaluation.log", file=fh)
         print(self.config.modeller_setup, file=fh)
         print("python3 " + self.config.modeller_script
-              + " --model input.pdb " + seq_ident + ">&modeller.log", file=fh)
+              + " --model " + mfname + " " + seq_ident + ">&modeller.log",
+              file=fh)
         print("echo \"<evaluation>\" >evaluation.txt\n", file=fh)
         print("rm -f evaluation.xml\n", file=fh)
         print("cat *.xml >>evaluation.txt\n", file=fh)

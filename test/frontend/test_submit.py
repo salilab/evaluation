@@ -82,6 +82,31 @@ class Tests(saliweb.test.TestCase):
                            re.MULTILINE | re.DOTALL)
             self.assertRegex(rv.data, r)
 
+    def test_submit_page_mmcif(self):
+        """Test submit page with mmCIF input"""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            incoming = os.path.join(tmpdir, 'incoming')
+            os.mkdir(incoming)
+            evaluation.app.config['DIRECTORIES_INCOMING'] = incoming
+            c = evaluation.app.test_client()
+
+            pdbf = os.path.join(tmpdir, 'test.cif')
+            with open(pdbf, 'w') as fh:
+                fh.write("dummy\n")  # we don't check for valid mmCIF format
+
+            data = {'modkey': saliweb.test.get_modeller_key(),
+                    'pdb_file': open(pdbf, 'rb'),
+                    'name': 'testjob',
+                    'email': 'test@test.com'}
+            rv = c.post('/job', data=data, follow_redirects=True)
+            self.assertEqual(rv.status_code, 503)  # job not finished yet
+            r = re.compile(b'Your job has been submitted to the server!.*'
+                           b'Your job ID is testjob.*'
+                           b'notified at test@test.com when job results '
+                           b'are available',
+                           re.MULTILINE | re.DOTALL)
+            self.assertRegex(rv.data, r)
+
     def test_submit_page_xml(self):
         """Test submit page with XML output forced"""
         with tempfile.TemporaryDirectory() as tmpdir:

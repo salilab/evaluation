@@ -29,6 +29,10 @@ def handle_new_job():
     if not model_file:
         raise saliweb.frontend.InputValidationError(
             "No coordinate file specified")
+    if model_file.filename.endswith('.cif'):
+        model_format = 'cif'
+    else:
+        model_format = 'pdb'
 
     job = saliweb.frontend.IncomingJob(job_name)
     with open(job.get_path('summary.txt'), 'w', encoding='utf-8') as fh:
@@ -42,7 +46,7 @@ def handle_new_job():
             fh.write("AlignmentFile\t%s\n"
                      % secure_filename(alignment_file.filename))
 
-    model_file.save(job.get_path('input.pdb'))
+    model_file.save(job.get_path('input.%s' % model_format))
     with open(job.get_path('parameters.txt'), 'w') as fh:
         fh.write("SequenceIdentity:%d\n" % seq_ident)
 
